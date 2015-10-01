@@ -1,3 +1,7 @@
+ephec_note:
+    resource: "@EPHECNoteBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ephec_main:
     resource: "@EPHECMainBundle/Resources/config/routing.yml"
     prefix:   /

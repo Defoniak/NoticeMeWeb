@@ -1,0 +1,4 @@
+services:
+#    ephec_note.example:
+#        class: EPHEC\Bundle\NoteBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

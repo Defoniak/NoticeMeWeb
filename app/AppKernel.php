@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
             new EPHEC\Bundle\MainBundle\EPHECMainBundle(),
+            new EPHEC\Bundle\NoteBundle\EPHECNoteBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
