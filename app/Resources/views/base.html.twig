@@ -155,25 +155,69 @@
 <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
-        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        <!--<div class="mdl-layout--large-screen-only mdl-layout__header-row">
         </div>
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
             <h3>Notice me senpai !</h3>
         </div>
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-        </div>
-        <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
-            <a href="#overview" class="mdl-layout__tab is-active">Overview</a>
-            <a href="#features" class="mdl-layout__tab">Features</a>
-            <a href="#features" class="mdl-layout__tab">Details</a>
-            <a href="#features" class="mdl-layout__tab">Technology</a>
-            <a href="#features" class="mdl-layout__tab">FAQ</a>
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="add">
+        </div>-->
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--white ">
+            <a href="#overview" class="mdl-layout__tab is-active mdl-color-text--grey-700 mdl-typography--text-uppercase">Overview</a>
+            <a href="#features" class="mdl-layout__tab mdl-color-text--grey-700 mdl-typography--text-uppercase">Features</a>
+            <a href="#features" class="mdl-layout__tab mdl-color-text--grey-700 mdl-typography--text-uppercase">Details</a>
+            <div class="mdl-layout-spacer"></div>
+            <a href="#features" class="mdl-layout__tab mdl-color-text--grey-700 mdl-typography--text-uppercase">Sign up</a>
+            <a href="#features" class="mdl-layout__tab mdl-color-text--grey-700 mdl-typography--text-uppercase">Login</a>
+            <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--grey-700" id="more-button">
+                <i class="material-icons">more_vert</i>
+            </button>
+            <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-button">
+                <li class="mdl-menu__item">Do</li>
+                <li class="mdl-menu__item" disabled>What</li>
+                <li class="mdl-menu__item">You</li>
+                <li class="mdl-menu__item">Want</li>
+                <li class="mdl-menu__item">Cauz</li>
+                <li class="mdl-menu__item">A</li>
+                <li class="mdl-menu__item">Pirat</li>
+                <li class="mdl-menu__item">Is</li>
+                <li class="mdl-menu__item">Free !</li>
+            </ul>
+            <!--<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="add">
                 <i class="material-icons" role="presentation">add</i>
                 <span class="visuallyhidden">Add</span>
-            </button>
+            </button>-->
         </div>
     </header>
+
+    <div class="mdl-layout__drawer">
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="">Phones</a>
+            <a class="mdl-navigation__link" href="">Tablets</a>
+            <a class="mdl-navigation__link" href="">Wear</a>
+            <a class="mdl-navigation__link" href="">TV</a>
+            <a class="mdl-navigation__link" href="">Auto</a>
+            <a class="mdl-navigation__link" href="">One</a>
+            <a class="mdl-navigation__link" href="">Play</a>
+            <div class="mdl-drawer-separator"></div>
+            <span class="mdl-navigation__link" href="">Versions</span>
+            <a class="mdl-navigation__link" href="">Lollipop 5.0</a>
+            <a class="mdl-navigation__link" href="">KitKat 4.4</a>
+            <a class="mdl-navigation__link" href="">Jelly Bean 4.3</a>
+            <a class="mdl-navigation__link" href="">Android history</a>
+            <div class="mdl-drawer-separator"></div>
+            <span class="mdl-navigation__link" href="">Resources</span>
+            <a class="mdl-navigation__link" href="">Official blog</a>
+            <a class="mdl-navigation__link" href="">Android on Google+</a>
+            <a class="mdl-navigation__link" href="">Android on Twitter</a>
+            <div class="mdl-drawer-separator"></div>
+            <span class="mdl-navigation__link" href="">For developers</span>
+            <a class="mdl-navigation__link" href="">App developer resources</a>
+            <a class="mdl-navigation__link" href="">Android Open Source Project</a>
+            <a class="mdl-navigation__link" href="">Android SDK</a>
+        </nav>
+    </div>
+
     <main class="mdl-layout__content">
         <div class="mdl-layout__tab-panel is-active" id="overview">
             <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">

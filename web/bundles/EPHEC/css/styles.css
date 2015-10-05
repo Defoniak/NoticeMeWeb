@@ -49,9 +49,15 @@ html, body {
   height: 64px;
   line-height: 64px;
 }
+
+.mdl-demo .mdl-layout__tab-bar .mdl-layout__tab:hover{
+  border-bottom: 4px solid #8bc34a;
+}
+
 .mdl-demo .mdl-layout__tab-bar .mdl-layout__tab.is-active::after {
-  background-color: white;
-  height: 4px;
+  #background-color: limegreen;
+  #height: 4px;
+  display: none;
 }
 .mdl-demo main > .mdl-layout__tab-panel {
   padding: 8px;
@@ -146,6 +152,19 @@ html, body {
   top: 8px;
   right: 8px;
 }
+#more-button{
+  position: relative;
+  z-index: 99;
+  top: 15px;
+  right: 8px;
+}
+.mdl-layout__drawer-button .material-icons {
+  background: transparent;
+  color: #767777;
+}
+.mdl-layout__drawer-button{
+  background: transparent;
+}
 .mdl-demo section .section__circle {
   display: -webkit-box;
   display: -webkit-flex;
@@ -214,7 +233,7 @@ html, body {
   margin-bottom: 24px;
 }
 .mdl-demo .mdl-layout__tab-panel:not(#overview) {
-  background-color: white;
+  background-color: #f5f5f5;
 }
 .mdl-demo #features section {
   margin-bottom: 72px;
