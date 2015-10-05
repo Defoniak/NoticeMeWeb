@@ -51,11 +51,11 @@ html, body {
 }
 
 .mdl-demo .mdl-layout__tab-bar .mdl-layout__tab:hover{
-  border-bottom: 4px solid #8bc34a;
+  border-bottom: 4px solid #3498DB;
 }
 
 .mdl-demo .mdl-layout__tab-bar .mdl-layout__tab.is-active::after {
-  #background-color: limegreen;
+  #background-color: #246A99;
   #height: 4px;
   display: none;
 }
@@ -98,7 +98,7 @@ html, body {
   color: inherit;
 }
 .mdl-demo .mdl-card__actions a {
-  color: #00BCD4;
+  color: #3498DB;
   margin: 0;
 }
 .mdl-demo .mdl-card__actions a:hover,
