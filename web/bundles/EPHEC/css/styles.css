@@ -31,6 +31,7 @@ html, body {
 .mdl-demo .mdl-layout.is-small-screen .mdl-layout__tab-bar .mdl-button {
   display: none;
 }
+
 .mdl-demo .mdl-layout:not(.is-small-screen) .mdl-layout__tab-bar,
 .mdl-demo .mdl-layout:not(.is-small-screen) .mdl-layout__tab-bar-container {
   overflow: visible;
@@ -48,6 +49,13 @@ html, body {
 .mdl-demo .mdl-layout__tab-bar .mdl-layout__tab {
   height: 64px;
   line-height: 64px;
+  position: relative !important;
+  left: 30px !important;
+}
+.mdl-layout-spacer{
+  max-width: 69%;
+}
+.mdl-demo .mdl-layout__tab-bar:first-child{
 }
 
 .mdl-demo .mdl-layout__tab-bar .mdl-layout__tab:hover{
@@ -153,17 +161,19 @@ html, body {
   right: 8px;
 }
 #more-button{
+  display: inline-block !important;
   position: relative;
   z-index: 99;
   top: 15px;
-  right: 8px;
+  left: 20px;
 }
 .mdl-layout__drawer-button .material-icons {
-  background: transparent;
   color: #767777;
+  background: transparent !important;
 }
 .mdl-layout__drawer-button{
-  background: transparent;
+  background: white !important;
+  color: white;
 }
 .mdl-demo section .section__circle {
   display: -webkit-box;
