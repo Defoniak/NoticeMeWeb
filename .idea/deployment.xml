@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="Pi" overwriteAll="false" deleteMissingItems="true">
+    <serverData>
+      <paths name="Pi">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/NoticeMe" local="$PROJECT_DIR$" web="/NoticeMe" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
