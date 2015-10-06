@@ -5,3 +5,6 @@
 /app/phpunit.xml
 /build/
 /bin/
+**/.idea/workspace.xml
+#/.idea/workspace.xml
+#.idea/workspace.xml
