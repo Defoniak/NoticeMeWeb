@@ -1,0 +1,22 @@
+/*.ne:hover{
+    border-bottom: solid green 2px;
+}
+
+.ne:active{
+    border-bottom: solid green 2px;
+}
+
+.active {
+    transform: translateY(0px);
+    transition: all 0.3s ease-out;
+    display: block;
+    opacity: 1;
+}*/
+
+.active{
+    border-bottom: solid green 2px;
+}
+
+.ne:hover{
+    border-bottom: solid green 2px;
+}
