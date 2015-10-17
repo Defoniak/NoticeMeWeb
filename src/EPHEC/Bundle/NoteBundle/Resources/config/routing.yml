@@ -1,3 +1,4 @@
 ephec_note_homepage:
-    path:     /hello/{name}
+    path:     /note/{name}
     defaults: { _controller: EPHECNoteBundle:Default:index }
+

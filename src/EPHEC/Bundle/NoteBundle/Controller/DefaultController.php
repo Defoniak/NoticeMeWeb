@@ -8,6 +8,7 @@ class DefaultController extends Controller
 {
     public function indexAction($name)
     {
+        echo "note";
         return $this->render('EPHECNoteBundle:Default:index.html.twig', array('name' => $name));
     }
 }
