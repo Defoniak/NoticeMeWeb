@@ -1,5 +1,37 @@
 {% extends "base.html.twig" %}
-{% block scriptgmap %}
+{% block content %}
+    <!-- MODAL -->
+    <div id="complete-dialog" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Ajout d'un formulaire</h4>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    Ajout d'un formulaire si si ma gueule
+                    <span id="modal-body-body"></span>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal">Dismiss</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN DE MODAL -->
+    <h3>Vos mémos</h3>
+    <div id="map"></div>
+    <div id="infoPanel">
+        <b>Marker status:</b>
+        <div id="markerStatus"><i>Click and drag the marker.</i></div>
+        <b>Current position:</b>
+        <div id="info"></div>
+        <b>Closest matching address:</b>
+        <div id="address"></div>
+    </div>
+    <div id="tabNote"><table id="tableNote" class="table table-striped table-hover "></table> </div>
+    <button id ="createNote" data-toggle="modal" data-target="#complete-dialog" class="btn btn-fab btn-raised btn-primary"><i class="mdi-image-edit"></i></button>
+
 
     <style>
         #map {
@@ -20,13 +52,14 @@
         }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
         // https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
         var geocoder = new google.maps.Geocoder();
         var map;
         var montableau = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
         var bounds = new google.maps.LatLngBounds ();
+        var personnalMarker;
         function geocodePositionTab(pos,callback) {
             geocoder.geocode({
                 latLng: pos
@@ -72,7 +105,6 @@
                 zoom: 8
             });
             var infoWindow = new google.maps.InfoWindow({map: map});
-            var personnalMarker;
             // Try HTML5 geolocation.
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
@@ -124,6 +156,7 @@
             });
             showNote();
             map.fitBounds(bounds);
+            map.setCenter(bounds.getCenter());
             createTable();
 
         }
@@ -161,20 +194,12 @@
             });
 
         }
+
+        $('#createNote').on('click', function() {
+            $('#modal-body-body').empty().append('Lat = '+ personnalMarker.getPosition().lat()+' Long ='+personnalMarker.getPosition().lng());
+            console.log("je te baise");
+        });
     </script>
-{% endblock %}
-{% block content %}
-    <h3>Vos mémos</h3>
-    <div id="map"></div>
-    <div id="infoPanel">
-        <b>Marker status:</b>
-        <div id="markerStatus"><i>Click and drag the marker.</i></div>
-        <b>Current position:</b>
-        <div id="info"></div>
-        <b>Closest matching address:</b>
-        <div id="address"></div>
-    </div>
-    <div id="tabNote"><table id="tableNote" class="table table-striped table-hover "></table> </div>
 {% endblock %}
 
 {#Hello {{ name }}!#}
