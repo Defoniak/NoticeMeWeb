@@ -25,7 +25,8 @@
         // https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
         var geocoder = new google.maps.Geocoder();
         var map;
-
+        var montableau = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+        var bounds = new google.maps.LatLngBounds ();
         function geocodePositionTab(pos,callback) {
             geocoder.geocode({
                 latLng: pos
@@ -96,33 +97,6 @@
                 updateMarkerPosition(map.getCenter());
                 geocodePosition(map.getCenter());
             }
-           /* var marker = new google.maps.Marker({
-                position: latlng,
-                map: map,
-                title: 'Set lat/lon values for this property',
-                draggable: true
-            });*/
-            /*var marker = new google.maps.Marker({
-                position: {lat: 50.8504500, lng: 4.3487800},
-                map: map,
-                animation:google.maps.Animation.DROP,
-                icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-                title: 'Rendez-vous chez le dentiste!'
-            });
-            var marker = new google.maps.Marker({
-                position: {lat: 50.541441396370274, lng: 4.856913942187475},
-                map: map,
-                animation:google.maps.Animation.DROP,
-                icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-                title: 'Rendez-vous chez le médecin!'
-            });
-            var marker = new google.maps.Marker({
-                position: {lat: 50.7608912624449, lng: 4.758136789062519},
-                map: map,
-                animation:google.maps.Animation.DROP,
-                icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-                title: 'Rendez-vous avec la mère de Nico à 18H45!'
-            });*/
             personnalMarker = new google.maps.Marker({
                 position: map.getCenter(),
                 map: map,
@@ -131,6 +105,7 @@
                 icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
                 visible: false
             });
+
             // Update current position info.
 
             // Add dragging event listeners.
@@ -148,6 +123,7 @@
                 geocodePosition(personnalMarker.getPosition());
             });
             showNote();
+            map.fitBounds(bounds);
             createTable();
 
         }
@@ -166,10 +142,12 @@
                     position: {lat: item.lat, lng: item.long},
                     map: map,
                     animation: google.maps.Animation.DROP,
-                    icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                    icon:'http://www.google.com/mapfiles/marker'+montableau[i]+'.png',
+                    //icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
                     title: item.desc
                 });
                 //console.log(item.desc)
+                bounds.extend(marker.getPosition());
             });
         }
         function createTable(){
@@ -177,8 +155,9 @@
             $.each(tab, function (i, item) {
                 var callback;
                 geocodePositionTab(new google.maps.LatLng(item.lat,item.long),function(callback){
-                    document.getElementById('tableNote').innerHTML += '<tr><td>'+item.desc+'</td><td>'+item.date+'</td><td>'+ callback +'</td></tr>'
+                    document.getElementById('tableNote').innerHTML += '<tr><td><img src="http://www.google.com/mapfiles/marker'+montableau[i]+'.png"/></td><td>'+item.desc+'</td><td>'+item.date+'</td><td>'+ callback +'</td></tr>';
                 });
+
             });
 
         }
