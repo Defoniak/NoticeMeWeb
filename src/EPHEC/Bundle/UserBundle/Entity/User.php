@@ -2,7 +2,7 @@
 
 namespace EPHEC\Bundle\UserBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,13 +15,13 @@ use Doctrine\ORM\Mapping as ORM;
 class User extends baseUser
 {
     /**
-     *
+     * @Assert\NotBlank(message="Please enter your name.", groups={"Registration", "Profile"})
      * @ORM\Column(name="lastName", type="string", length=45, nullable=false)
      */
     private $lastname;
 
     /**
-     *
+     * @Assert\NotBlank(message="Please enter your name.", groups={"Registration", "Profile"})
      * @ORM\Column(name="firstName", type="string", length=45, nullable=false)
      */
     private $firstname;
