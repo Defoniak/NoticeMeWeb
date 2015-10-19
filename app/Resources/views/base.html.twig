@@ -20,49 +20,7 @@
         <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
         <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">-->
     {% endblock %}
-    <!------ ---->
-    <style>
-        #map {
-            width: 500px;
-            height: 400px;
-        }
-    </style>
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script>
-        // https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
-        function initialize() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: -34.397, lng: 150.644},
-                zoom: 6
-            });
-            var infoWindow = new google.maps.InfoWindow({map: map});
-            // Try HTML5 geolocation.
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    var pos = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
-                    infoWindow.setPosition(pos);
-                    infoWindow.setContent('Location found.');
-                    map.setCenter(pos);
-                }, function() {
-                    handleLocationError(true, infoWindow, map.getCenter());
-                });
-            } else {
-                // Browser doesn't support Geolocation
-                handleLocationError(false, infoWindow, map.getCenter());
-            }
-        }
-        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-            infoWindow.setPosition(pos);
-            infoWindow.setContent(browserHasGeolocation ?
-                    'Error: The Geolocation service failed.' :
-                    'Error: Your browser doesn\'t support geolocation.');
-        }
-        google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
-    <!---- --->
+    {% block scriptgmap %}{% endblock %}
 </head>
 <body>
 {% block body %}
@@ -112,9 +70,9 @@
         </div>
     </div>
 {% endblock %}
-<div id="map">
-    {% block gmap %}Welcome!{% endblock %}
-</div>
+{% block content %}
+
+{% endblock %}
 {% block javascripts %}
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script>
