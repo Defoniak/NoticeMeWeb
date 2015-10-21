@@ -7,7 +7,7 @@ use EPHEC\Bundle\NoteBundle\Entity\Alarm;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function indexAction()
     {
         //usermanager get current user
         //
