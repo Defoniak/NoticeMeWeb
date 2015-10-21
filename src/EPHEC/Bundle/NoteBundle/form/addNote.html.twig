@@ -1,0 +1,49 @@
+{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+{{ form_errors(form) }}
+    <fieldset>
+        <legend>Ajout d'un mémo</legend>
+        <div class="form-group">
+            {{ form_label(form.datealarm, "Date", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+            {{ form_errors(form.datealarm) }}
+            <div class="col-lg-10">
+                {{ form_widget(form.datealarm, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.latitude, "Latitude", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+            {{ form_errors(form.latitude) }}
+            <div class="col-lg-10">
+                {{ form_widget(form.latitude, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.longitude, "longitude", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+            {{ form_errors(form.longitude) }}
+            <div class="col-lg-10">
+                {{ form_widget(form.longitude, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.title, "Titre", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+            {{ form_errors(form.title) }}
+            <div class="col-lg-10">
+                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.memo, "longitude", {'Description': {'class': 'col-lg-2 control-label'}}) }}
+            {{ form_errors(form.memo) }}
+            <div class="col-lg-10">
+                {{ form_widget(form.memo, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button class="btn btn-default">Cancel</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </fieldset>
+{{ form_rest(form) }}
+
+{{ form_end(form) }}

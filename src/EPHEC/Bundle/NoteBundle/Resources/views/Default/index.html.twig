@@ -6,15 +6,65 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Ajout d'un formulaire</h4>
                 </div>
                 <div class="modal-body" id="modal-body">
-                    Ajout d'un formulaire à venir
+
+                    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                    {{ form_errors(form) }}
+                    <fieldset>
+                        <legend>Ajout d'un mémo</legend>
+                        <div class="form-group">
+                            {{ form_label(form.datealarm, "Date", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+                            {{ form_errors(form.datealarm) }}
+                            <div class="col-lg-10">
+                                {{ form_widget(form.datealarm, {'attr': {'class': 'form-control', 'id':'datePicker'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.latitude, "Latitude", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+                            {{ form_errors(form.latitude) }}
+                            <div class="col-lg-10">
+                                {{ form_widget(form.latitude, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.longitude, "Longitude", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+                            {{ form_errors(form.longitude) }}
+                            <div class="col-lg-10">
+                                {{ form_widget(form.longitude, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.title, "Titre", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+                            {{ form_errors(form.title) }}
+                            <div class="col-lg-10">
+                                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.memo, "Description", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+                            {{ form_errors(form.memo) }}
+                            <div class="col-lg-10">
+                                {{ form_widget(form.memo, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <div class="col-lg-10 col-lg-offset-2">
+                                <button class="btn btn-default">Cancel</button>
+                                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                            </div>
+                        </div>
+                    </fieldset>
+                    {{ form_rest(form) }}
+
+                    {{ form_end(form) }}
                     <span id="modal-body-body"></span>
                 </div>
-                <div class="modal-footer">
+
+               <!-- <div class="modal-footer">
                     <button class="btn btn-primary" data-dismiss="modal">Ajouter</button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
