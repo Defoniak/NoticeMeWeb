@@ -51,7 +51,7 @@
 
                         <div class="modal-footer">
                             <div class="col-lg-10 col-lg-offset-2">
-                                <button class="btn btn-default">Cancel</button>
+                                <button class="btn btn-default" data-dismiss="modal">Cancel</button>
                                 {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
                             </div>
                         </div>
@@ -62,9 +62,9 @@
                     <span id="modal-body-body"></span>
                 </div>
 
-               <!-- <div class="modal-footer">
+               {#<div class="modal-footer">
                     <button class="btn btn-primary" data-dismiss="modal">Ajouter</button>
-                </div> -->
+                </div>#}
             </div>
         </div>
     </div>
@@ -191,6 +191,7 @@
                 handleLocationError(false, infoWindow, map.getCenter());
                 personnalMarker.setVisible(true);
                 updateMarkerPosition(map.getCenter());
+                personnalMarker.setVisible(true);
                 geocodePosition(map.getCenter());
             }
             personnalMarker = new google.maps.Marker({
