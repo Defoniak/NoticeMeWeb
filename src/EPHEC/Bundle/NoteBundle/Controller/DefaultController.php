@@ -21,7 +21,6 @@ class DefaultController extends Controller
         //ajout form on test ca va jamais marcher
         $alarm = new Alarm();
         $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
         $formBuilder = $this->get('form.factory')->createBuilder('form', $alarm);
         $formBuilder
             //->add('datealarm','text')
@@ -37,6 +36,7 @@ class DefaultController extends Controller
             ->add('save', 'submit');
         $form = $formBuilder->getForm();
         //fin ajout form
+        dump($form->getData());
         if ($form->isValid()) {
             $em->persist($alarm);
             $em->flush();
@@ -44,39 +44,4 @@ class DefaultController extends Controller
 
         return $this->render('EPHECNoteBundle:Default:index.html.twig', array('note' => $note, 'form' => $form->createView()));
     }
-
-   /* public function addMemo()
-    {
-        $alarm = new Alarm();
-        $postform = $this->get(‘form . factory’)->create(new Alarm(), $alarm);
-        $request = $this->get(‘request’);
-
-        if (‘POST’ == $request->getMethod())
-        {
-            $postform->bindRequest($request);
-
-            if ($postform->isValid()) {
-                $email = $postform->getData()->getEmail();
-                $name = $postform->getData()->getName();
-                $text = $postform->getData()->getText();
-
-                $monEntite->setEmail($email);
-                $monEntite->setName($name);
-                $monEntite->setText($text);
-
-                $em = $this->getDoctrine()->getEntityManager();
-                $em->persist($monEntite);
-                $em->flush();
-                // Si le formulaire est pas valide, nous envoyons ok
-                echo ‘ok’;
-            } else {
-                // Si le formulaire n’est pas valide, nous envoyons ko
-                echo ‘ko’;
-            }
-        }
-        else
-        {
-            return array(‘form’ => $form->createView());
-        }
-    }*/
 }
