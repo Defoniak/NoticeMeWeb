@@ -5,7 +5,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
                 </div>
                 <div class="modal-body" id="modal-body">
 
@@ -17,21 +17,28 @@
                             {{ form_label(form.datealarm, "Date", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
                             {{ form_errors(form.datealarm) }}
                             <div class="col-lg-10">
-                                {{ form_widget(form.datealarm, {'attr': {'class': 'form-control', 'id':'datePicker'}}) }}
+                                 <div class='input-group date' id='datePicker'>
+                                     {{ form_widget(form.datealarm, {'attr': {'class': 'form-control'}}) }}
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                 </div>
+
+                                {# {{ form_widget(form.datealarm, {'attr': {'class': 'form-control', 'id':'datePicker'}}) }} #}
                             </div>
                         </div>
                         <div class="form-group">
                             {{ form_label(form.latitude, "Latitude", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
                             {{ form_errors(form.latitude) }}
                             <div class="col-lg-10">
-                                {{ form_widget(form.latitude, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_widget(form.latitude, {'attr': {'class': 'form-control', 'disabled':'disabled'}}) }}
                             </div>
                         </div>
                         <div class="form-group">
                             {{ form_label(form.longitude, "Longitude", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
                             {{ form_errors(form.longitude) }}
                             <div class="col-lg-10">
-                                {{ form_widget(form.longitude, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_widget(form.longitude, {'attr': {'class': 'form-control','disabled':'disabled'}}) }}
                             </div>
                         </div>
                         <div class="form-group">
@@ -51,7 +58,7 @@
 
                         <div class="modal-footer">
                             <div class="col-lg-10 col-lg-offset-2">
-                                <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button class="btn btn-default" data-dismiss="modal">Annuler</button>
                                 {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
                             </div>
                         </div>
@@ -115,7 +122,10 @@
             margin : auto;
         }
     </style>
+    <link rel="stylesheet" href="//www.bruminator.eu/includes/css/bootstrap-datetimepicker.min.css">
     <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="//www.bruminator.eu/includes/js/moment-with-locales.min.js"></script>
+    <script src="//www.bruminator.eu/includes/js/bootstrap-datetimepicker.min.js"></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
     <script>
         // https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
@@ -265,7 +275,14 @@
         }
 
         $('#createNote').on('click', function() {
-            $('#modal-body-body').empty().append('Lat = '+ personnalMarker.getPosition().lat()+' Long ='+personnalMarker.getPosition().lng());
+            //$('#modal-body-body').empty().append('Lat = '+ personnalMarker.getPosition().lat()+' Long ='+personnalMarker.getPosition().lng());
+            $('#form_latitude').empty().val(personnalMarker.getPosition().lat());
+            $('#form_longitude').empty().val(personnalMarker.getPosition().lng());
+        });
+        $(function () {
+            $('#form_datealarm').datetimepicker({locale:"fr",showTodayButton: true,
+                stepping : 5,
+                format : "DD-MM-YYYY HH:mm"});
         });
     </script>
 {% endblock %}
