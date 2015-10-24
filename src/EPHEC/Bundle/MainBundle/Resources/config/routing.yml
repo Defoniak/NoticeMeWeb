@@ -1,3 +1,7 @@
 ephec_main_homepage:
     path:     /
     defaults: { _controller: EPHECMainBundle:Default:index }
+
+ephec_android_login:
+    path: /android/login
+    defaults: { _controller: EPHECMainBundle:Default:androidlogin}
