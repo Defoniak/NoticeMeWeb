@@ -31,14 +31,14 @@
                             {{ form_label(form.latitude, "Latitude", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
                             {{ form_errors(form.latitude) }}
                             <div class="col-lg-10">
-                                {{ form_widget(form.latitude, {'attr': {'class': 'form-control', 'disabled':'disabled'}}) }}
+                                {{ form_widget(form.latitude, {'attr': {'class': 'form-control', 'readonly':'readonly'}}) }}
                             </div>
                         </div>
                         <div class="form-group">
                             {{ form_label(form.longitude, "Longitude", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
                             {{ form_errors(form.longitude) }}
                             <div class="col-lg-10">
-                                {{ form_widget(form.longitude, {'attr': {'class': 'form-control','disabled':'disabled'}}) }}
+                                {{ form_widget(form.longitude, {'attr': {'class': 'form-control','readonly':'readonly'}}) }}
                             </div>
                         </div>
                         <div class="form-group">

@@ -1,6 +1,9 @@
 <?php
 
 namespace EPHEC\Bundle\UserBundle\Entity;
+use EPHEC\Bundle\NoteBundle\Entity\Alarmgroup;
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
@@ -36,9 +39,27 @@ class User extends baseUser
 
     /**
      *
-     * @ORM\ManyToMany(targetEntity="EPHEC\Bundle\NoteBundle\Entity\Alarmgroup", mappedBy="user")
+     * @ORM\ManyToMany(targetEntity="EPHEC\Bundle\NoteBundle\Entity\Alarmgroup", mappedBy="user", cascade={"persist", "refresh"}, fetch="EAGER")
      */
     private $group;
+
+
+    public function __construct(){
+        parent::__construct();
+        $this->group = new ArrayCollection();
+    }
+
+    /*public function prePersist(LifecycleEventArgs $event)
+    {
+        dump($event);
+        $group = new Alarmgroup();
+        $group->addUser($this);
+        $group->setAlarmname($this->getFirstname().$this->getLastname());
+        $group->setDescription(" ");
+        $event->getObjectManager()->persist($group);
+        $this->addAlarmGroup($group);
+        dump($group);
+    }*/
 
     /**
      * Set lastname
@@ -89,10 +110,22 @@ class User extends baseUser
     /**
      * Get group
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGroup()
     {
         return $this->group;
+    }
+
+    public function addAlarmGroup(Alarmgroup $group)
+    {
+        $this->group[] = $group;
+
+        return $this;
+    }
+
+    public function removeAlarmGroup(AlarmGroup $group)
+    {
+        $this->applications->removeElement($group);
     }
 }
