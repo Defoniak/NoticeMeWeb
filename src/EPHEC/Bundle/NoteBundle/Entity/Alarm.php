@@ -63,6 +63,11 @@ class Alarm
      */
     private $id;
 
+    public function __construct(){
+        $this->setDatevalid((new \DateTime('now')));
+        //$this->setDatevalid("27-10-2015 18:15");
+    }
+
     /**
      * Set datealarm
      *

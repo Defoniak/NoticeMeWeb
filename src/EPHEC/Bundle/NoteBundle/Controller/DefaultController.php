@@ -36,8 +36,16 @@ class DefaultController extends Controller
             ->add('save', 'submit');
         $form = $formBuilder->getForm();
         //fin ajout form
-        dump($form->getData());
-        if ($form->isValid()) {
+        if ($this->get('request')->getMethod() == 'POST'){
+            //[datealarm => 29-10-2015 17:50, latitude => 48.28319289548349, longitude => 3.603515625, title => qsqsd, memo => sfsdfdsfdsf, save => , _token => Q9EYrSsS4eeSUSoEBboLMKYaB8A86coEcoukqoo8qlM]
+            $alarm->setGroup($this->getUser()->getGroup()[0]);
+            $date = $_POST["form"]["datealarm"];
+            $alarm->setDateAlarm((new \DateTime())->setDate(substr($date,6,4),substr($date,3,2),substr($date,0,2))->setTime(substr($date,11,2),substr($date,14,2)));
+            $alarm->setLatitude($_POST['form']['latitude']);
+            $alarm->setLongitude($_POST['form']['longitude']);
+            $alarm->setTitle($_POST['form']['title']);
+            $alarm->setMemo($_POST['form']['memo']);
+            dump($alarm);
             $em->persist($alarm);
             $em->flush();
         }
