@@ -44,4 +44,7 @@ class DefaultController extends Controller
 
         return $this->render('EPHECNoteBundle:Default:index.html.twig', array('note' => $note, 'form' => $form->createView()));
     }
+    public function traitementFormulaire(){
+
+    }
 }

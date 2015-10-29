@@ -9,10 +9,11 @@
                 </div>
                 <div class="modal-body" id="modal-body">
 
-                    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                    {{ form_start(form, {'attr': {'class': 'form-horizontal','id':'addMemoFrom'}}) }}
                     {{ form_errors(form) }}
                     <fieldset>
                         <legend>Ajout d'un mémo</legend>
+                        <div class="form-feedback"></div>
                         <div class="form-group">
                             {{ form_label(form.datealarm, "Date", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
                             {{ form_errors(form.datealarm) }}
@@ -31,14 +32,14 @@
                             {{ form_label(form.latitude, "Latitude", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
                             {{ form_errors(form.latitude) }}
                             <div class="col-lg-10">
-                                {{ form_widget(form.latitude, {'attr': {'class': 'form-control', 'disabled':'disabled'}}) }}
+                                {{ form_widget(form.latitude, {'attr': {'class': 'form-control','readonly':'readonly'}}) }}
                             </div>
                         </div>
                         <div class="form-group">
                             {{ form_label(form.longitude, "Longitude", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
                             {{ form_errors(form.longitude) }}
                             <div class="col-lg-10">
-                                {{ form_widget(form.longitude, {'attr': {'class': 'form-control','disabled':'disabled'}}) }}
+                                {{ form_widget(form.longitude, {'attr': {'class': 'form-control','readonly':'readonly'}}) }}
                             </div>
                         </div>
                         <div class="form-group">
@@ -283,6 +284,46 @@
             $('#form_datealarm').datetimepicker({locale:"fr",showTodayButton: true,
                 stepping : 5,
                 format : "DD-MM-YYYY HH:mm"});
+        });
+
+
+        $(function (){
+            $('#addMemoFrom').submit(function(e){
+                e.preventDefault();
+                $form =$(this);
+                var that = $(this),
+                        url = that.attr('action'),
+                        method = that.attr('method'),
+                        data = {};
+                console.log(method);
+                that.find('[name]').each(function(index, value){
+                    //console.log(value);
+                    var that = $(this),
+                            name = that.attr('name'),
+                            value = that.val();
+                    data[name]=value;
+                    //console.log(that.val());
+                });
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data: data,
+                    success: function(response){
+                        console.log(response)
+                    }
+                });
+               /* $value=$(this).serialize();
+                document.getElementById('modal-body-body').innerHTML = $value;
+
+
+                $.post(document.location.url, $(this).serialize(), function(data){
+                    $feedback = $("<div>").html(data).find(".form-feedback").hide();
+
+                    $form.prepend($feedback);
+                    //document.getElementById('modal-body-body').innerHTML = $data;
+                    $feedback.fadeIn(1500);
+                });*/
+            });
         });
     </script>
 {% endblock %}
