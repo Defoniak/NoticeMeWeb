@@ -47,8 +47,9 @@ class DefaultController extends Controller
                 && isset($_POST["form"]["longitude"]) && isset($_POST["form"]["title"]) && isset($_POST["form"]["memo"])){
                 $em = $this->getDoctrine()->getManager();
                 $groups = $this->getUser()->getGroup();
+                $alarms = array();
                 foreach($groups as $group){
-                    $em->getRepository("EPHECNoteBundle:Alarm")->findBy(array('group'=>$group));
+                    $alarms[] = $em->getRepository("EPHECNoteBundle:Alarm")->findBy(array('group'=>$group)); // alarms ==> tableau d'alarmes
                 }
                 /*$alarm = new Alarm();
                 $em = $this->getDoctrine()->getManager();
