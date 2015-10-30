@@ -4,7 +4,7 @@ ephec_user:
 
 ephec_note:
     resource: "@EPHECNoteBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /note
 
 ephec_main:
     resource: "@EPHECMainBundle/Resources/config/routing.yml"

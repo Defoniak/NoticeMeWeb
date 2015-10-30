@@ -13,7 +13,7 @@
                     {{ form_errors(form) }}
                     <fieldset>
                         <legend>Ajout d'un mémo</legend>
-                        <div class="form-feedback"></div>
+                        <div id ="form-feedback" class="form-feedback"></div>
                         <div class="form-group">
                             {{ form_label(form.datealarm, "Date", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
                             {{ form_errors(form.datealarm) }}
@@ -76,6 +76,21 @@
             </div>
         </div>
     </div>
+
+    <!-- MODAL 2 -->
+    <div id="memoAdded" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                </div>
+                <div class="modal-body" id="modal-body">
+
+                    <span id="modal-body-body">Votre mémo a été correctement ajouté</span>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- FIN DE MODAL -->
     <div id="map"></div>
     <div style = float:left;>
@@ -135,6 +150,7 @@
         var montableau = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
         var bounds = new google.maps.LatLngBounds ();
         var personnalMarker;
+        var counter;
         function geocodePositionTab(pos,callback) {
             geocoder.geocode({
                 latLng: pos
@@ -261,6 +277,7 @@
                 });
                 //console.log(item.desc)
                 bounds.extend(marker.getPosition());
+                counter = i;
             });
         }
         function createTable(){
@@ -292,7 +309,7 @@
                 e.preventDefault();
                 $form =$(this);
                 var that = $(this),
-                        url = that.attr('action'),
+                        url = (that.attr('action')+"add"),
                         method = that.attr('method'),
                         data = {};
                 console.log(method);
@@ -302,14 +319,35 @@
                             name = that.attr('name'),
                             value = that.val();
                     data[name]=value;
-                    //console.log(that.val());
                 });
                 $.ajax({
                     url: url,
                     type: method,
+                    dataType: "json",
                     data: data,
                     success: function(response){
-                        console.log(response)
+                        if (response["res"]==true){
+                            console.log('ok');
+                            //console.log(data["form[datealarm]"]); //form[latitude] form[longitude] form[title] form[memo]
+                            $('#complete-dialog').modal('hide');
+                            $('#memoAdded').modal('show');
+                            setTimeout(function() {$('#memoAdded').modal('hide');}, 2500);
+                            $("#addMemoFrom")[0].reset();
+                            geocodePositionTab(new google.maps.LatLng(data["form[latitude]"],data["form[longitude]"]),function(callback){
+                                document.getElementById('tableNote').innerHTML +=
+                                    '<tr><td><img src="http://www.google.com/mapfiles/marker'+montableau[counter+1]+'.png"/></td>' +
+                                    '<td>'+data["form[title]"]+'</td><td>'+data["form[datealarm]"]+'</td><td>'+ callback +'</td></tr>'
+                            });
+                            var marker = new google.maps.Marker({
+                                position: {lat: parseFloat(data["form[latitude]"]), lng: parseFloat(data["form[longitude]"]) },
+                                map: map,
+                                animation: google.maps.Animation.DROP,
+                                icon:'http://www.google.com/mapfiles/marker'+montableau[counter+1]+'.png',
+                                //icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                                title: data["form[title]"]
+                            });
+                            counter++;
+                        }
                     }
                 });
                /* $value=$(this).serialize();
@@ -325,6 +363,7 @@
                 });*/
             });
         });
+
     </script>
 {% endblock %}
 

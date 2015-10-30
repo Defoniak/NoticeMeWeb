@@ -1,3 +1,6 @@
 ephec_note_homepage:
-    path:     /note
+    path:     /
     defaults: { _controller: EPHECNoteBundle:Default:index }
+ephec_note_addMemo:
+    path:     /add
+    defaults: { _controller: EPHECNoteBundle:Default:addMemo }
