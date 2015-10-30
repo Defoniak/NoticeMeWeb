@@ -20,6 +20,11 @@ class DefaultController extends Controller
 
         //ajout form on test ca va jamais marcher
         $alarm = new Alarm();
+        $em = $this->getDoctrine()->getManager();
+        $groups = $this->getUser()->getGroup();
+        foreach($groups as $group){
+            $em->getRepository("EPHECNoteBundle:Alarm")->findBy(array('group'=>$group));
+        }
         $formBuilder = $this->get('form.factory')->createBuilder('form', $alarm);
         $formBuilder
             //->add('datealarm','text')
@@ -45,11 +50,6 @@ class DefaultController extends Controller
         if ($this->get('request')->getMethod() == 'POST') {
             if(isset($_POST["form"]["datealarm"]) && isset($_POST["form"]["latitude"])
                 && isset($_POST["form"]["longitude"]) && isset($_POST["form"]["title"]) && isset($_POST["form"]["memo"])){
-                $em = $this->getDoctrine()->getManager();
-                $groups = $this->getUser()->getGroup();
-                foreach($groups as $group){
-                    $em->getRepository("EPHECNoteBundle:Alarm")->findBy(array('group'=>$group));
-                }
                 /*$alarm = new Alarm();
                 $em = $this->getDoctrine()->getManager();
                 //[datealarm => 29-10-2015 17:50, latitude => 48.28319289548349, longitude => 3.603515625, title => qsqsd, memo => sfsdfdsfdsf, save => , _token => Q9EYrSsS4eeSUSoEBboLMKYaB8A86coEcoukqoo8qlM]
