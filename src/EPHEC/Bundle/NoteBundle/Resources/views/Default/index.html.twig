@@ -268,7 +268,7 @@
             var tab = {{ note | raw }};
             $.each(tab, function (i, item) {
                 var marker = new google.maps.Marker({
-                    position: {lat: item.lat, lng: item.long},
+                    position: {lat: parseFloat(item.lat), lng: parseFloat(item.long)},
                     map: map,
                     animation: google.maps.Animation.DROP,
                     icon:'http://www.google.com/mapfiles/marker'+montableau[i]+'.png',
@@ -284,7 +284,7 @@
             var tab = {{ note | raw }};
             $.each(tab, function (i, item) {
                 var callback;
-                geocodePositionTab(new google.maps.LatLng(item.lat,item.long),function(callback){
+                geocodePositionTab(new google.maps.LatLng(parseFloat(item.lat),parseFloat(item.long)),function(callback){
                     document.getElementById('tableNote').innerHTML += '<tr><td><img src="http://www.google.com/mapfiles/marker'+montableau[i]+'.png"/></td><td>'+item.desc+'</td><td>'+item.date+'</td><td>'+ callback +'</td></tr>';
                 });
 

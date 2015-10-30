@@ -16,10 +16,25 @@ class DefaultController extends Controller
         $tab[] = array('desc' => 'Rendez vous avec la mère de Nico', 'date' => '12/11/2015 18H30', 'lat' => 50.7608912624449, 'long' => 4.758136789062519);
         $tab[] = array('desc' => 'Convention', 'date' => '12/11/2015 18H30', 'lat' => 48.8647964666206, 'long' => 2.363014357812517);
         $tab[] = array('desc' => 'testtresèloing', 'date' => '12/11/2015 18H30', 'lat' => 53.527320580555646, 'long' => -8.409070368750008);
-        $note = json_encode($tab);
+        //$note = json_encode($tab);
+        $tab2 = array();
 
         //ajout form on test ca va jamais marcher
         $alarm = new Alarm();
+        $em = $this->getDoctrine()->getManager();
+        $groups = $this->getUser()->getGroup();
+        $alarms = array();
+        foreach($groups as $group){
+            $alarms[] = $em->getRepository("EPHECNoteBundle:Alarm")->findBy(array('group'=>$group)); // alarms ==> tableau d'alarmes
+
+        }
+        //ajouter un boucle
+
+        foreach($alarms[0] as $value){
+            $tab2[] = array('desc'=>$value->getTitle(),'date'=>date_format($value->getDatealarm(), 'Y-m-d H:i:s'),'lat'=>$value->getLatitude(),'long'=>$value->getLongitude());
+        }
+        $note = json_encode($tab2);
+
         $formBuilder = $this->get('form.factory')->createBuilder('form', $alarm);
         $formBuilder
             //->add('datealarm','text')
@@ -45,12 +60,6 @@ class DefaultController extends Controller
         if ($this->get('request')->getMethod() == 'POST') {
             if(isset($_POST["form"]["datealarm"]) && isset($_POST["form"]["latitude"])
                 && isset($_POST["form"]["longitude"]) && isset($_POST["form"]["title"]) && isset($_POST["form"]["memo"])){
-                $em = $this->getDoctrine()->getManager();
-                $groups = $this->getUser()->getGroup();
-                $alarms = array();
-                foreach($groups as $group){
-                    $alarms[] = $em->getRepository("EPHECNoteBundle:Alarm")->findBy(array('group'=>$group)); // alarms ==> tableau d'alarmes
-                }
                 /*$alarm = new Alarm();
                 $em = $this->getDoctrine()->getManager();
                 //[datealarm => 29-10-2015 17:50, latitude => 48.28319289548349, longitude => 3.603515625, title => qsqsd, memo => sfsdfdsfdsf, save => , _token => Q9EYrSsS4eeSUSoEBboLMKYaB8A86coEcoukqoo8qlM]
