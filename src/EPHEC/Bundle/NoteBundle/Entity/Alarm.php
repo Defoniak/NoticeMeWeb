@@ -31,6 +31,11 @@ class Alarm
     private $title;
 
     /**
+     * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
+     */
+    private $deletedAt;
+
+    /**
      *
      * @ORM\ManyToOne(targetEntity="EPHEC\Bundle\NoteBundle\Entity\Alarmgroup")
      * @ORM\JoinColumn(nullable=false)
@@ -90,6 +95,28 @@ class Alarm
     {
         return $this->datealarm;
     }
+
+    /**
+     * Get deletedAt
+     *
+     * @return /DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * Set deletedAt
+     *
+     * @param /DateTime $ deletedAt
+     * @return Alarm
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
+
 
     /**
      * Set memo
