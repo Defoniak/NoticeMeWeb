@@ -29,10 +29,16 @@ class DefaultController extends Controller
 
         }
         //ajouter un boucle
+        if(!empty($alarms) && !empty($alarms[0])){
+            $empty = 0;
+            foreach($alarms[0] as $value){
+                $tab2[] = array('desc'=>$value->getTitle(),'date'=>date_format($value->getDatealarm(), 'Y-m-d H:i:s'),
+                    'lat'=>$value->getLatitude(),'long'=>$value->getLongitude(), 'id'=>$value->getId());
+            }
 
-        foreach($alarms[0] as $value){
-            $tab2[] = array('desc'=>$value->getTitle(),'date'=>date_format($value->getDatealarm(), 'Y-m-d H:i:s'),'lat'=>$value->getLatitude(),'long'=>$value->getLongitude());
         }
+        else { $empty = 1;}
+
         $note = json_encode($tab2);
 
         $formBuilder = $this->get('form.factory')->createBuilder('form', $alarm);
@@ -54,29 +60,72 @@ class DefaultController extends Controller
 
 
 
-        return $this->render('EPHECNoteBundle:Default:index.html.twig', array('note' => $note, 'form' => $form->createView()));
+        return $this->render('EPHECNoteBundle:Default:index.html.twig', array('note' => $note, 'form' => $form->createView(),
+            'empty' => $empty ));
     }
     public function addMemoAction(){
         if ($this->get('request')->getMethod() == 'POST') {
             if(isset($_POST["form"]["datealarm"]) && isset($_POST["form"]["latitude"])
                 && isset($_POST["form"]["longitude"]) && isset($_POST["form"]["title"]) && isset($_POST["form"]["memo"])){
-                /*$alarm = new Alarm();
+                $alarm = new Alarm();
                 $em = $this->getDoctrine()->getManager();
-                //[datealarm => 29-10-2015 17:50, latitude => 48.28319289548349, longitude => 3.603515625, title => qsqsd, memo => sfsdfdsfdsf, save => , _token => Q9EYrSsS4eeSUSoEBboLMKYaB8A86coEcoukqoo8qlM]
                 $alarm->setGroup($this->getUser()->getGroup()[0]);
                 $date = $_POST["form"]["datealarm"];
-                $alarm->setDateAlarm((new \DateTime())->setDate(substr($date, 6, 4), substr($date, 3, 2), substr($date, 0, 2))->setTime(substr($date, 11, 2), substr($date, 14, 2)));
+                $alarm->setDateAlarm((new \DateTime())->setDate(substr($date, 6, 4), substr($date, 3, 2),
+                    substr($date, 0, 2))->setTime(substr($date, 11, 2), substr($date, 14, 2)));
                 $alarm->setLatitude($_POST['form']['latitude']);
                 $alarm->setLongitude($_POST['form']['longitude']);
                 $alarm->setTitle($_POST['form']['title']);
                 $alarm->setMemo($_POST['form']['memo']);
                 $em->persist($alarm);
-                $em->flush();*/
+                $em->flush();
                 $res = json_encode(array('res' => true));
                 return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('res' => $res));
             }
             else return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('name' => false));
         }
         else return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('name' => false));
+    }
+    public function editMemoAction($idMemo){
+
+        // why r u doing this shitbro
+        $request = $this->get('request');
+
+        if (is_null($idMemo)) {
+            $postData = $request->get('testimonial');
+            $id = $postData['id'];
+        }
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $alarm = $em->getRepository("EPHECNoteBundle:Alarm")->find($idMemo);
+        $formBuilder = $this->get('form.factory')->createBuilder('form', $alarm);
+        $formBuilder
+            //->add('datealarm','text')
+            ->add('datealarm', 'date', [
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy HH:mm',
+                'input' => 'datetime'
+            ])
+            ->add('latitude', 'text')
+            ->add('longitude', 'text')
+            ->add('title', 'text')
+            ->add('memo', 'textarea')
+            ->add('save', 'submit');
+        $form = $formBuilder->getForm();
+
+        if ($request->getMethod() == 'POST') {
+            $date = $_POST["form"]["datealarm"];
+            $alarm->setDateAlarm((new \DateTime())->setDate(substr($date, 6, 4), substr($date, 3, 2),
+                substr($date, 0, 2))->setTime(substr($date, 11, 2), substr($date, 14, 2)));
+            $alarm->setLatitude($_POST['form']['latitude']);
+            $alarm->setLongitude($_POST['form']['longitude']);
+            $alarm->setTitle($_POST['form']['title']);
+            $alarm->setMemo($_POST['form']['memo']);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('ephec_note_homepage'));
+        }
+
+        return $this->render('EPHECNoteBundle:Default:edit.html.twig', array('id' => $idMemo,'form' => $form->createView()));
     }
 }

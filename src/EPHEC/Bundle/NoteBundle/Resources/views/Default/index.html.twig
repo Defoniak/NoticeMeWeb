@@ -92,10 +92,10 @@
         </div>
     </div>
     <!-- FIN DE MODAL -->
+    <div><h3>Vos mémos</h3></div>
     <div id="map"></div>
     <div style = float:left;>
     <div id="tabNote"><table id="tableNote" class="table table-striped table-hover ">
-            <caption><h3>Vos mémos</h3></caption>
             <tr>
                 <th></th>
                 <th>Description</th>
@@ -103,6 +103,7 @@
                 <th>Adresse</th>
             </tr>
         </table> </div>
+        <div id ="emptyTable"></div>
     <div style="clear:left;"></div>
         <div id="infoPanel">
             <b>Adresse estimée:</b>
@@ -150,7 +151,7 @@
         var montableau = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
         var bounds = new google.maps.LatLngBounds ();
         var personnalMarker;
-        var counter;
+        var counter=0;
         function geocodePositionTab(pos,callback) {
             geocoder.geocode({
                 latLng: pos
@@ -173,18 +174,6 @@
                 }
             });
         }
-
-        /*function updateMarkerStatus(str) {
-            document.getElementById('markerStatus').innerHTML = str;
-        }
-
-        function updateMarkerPosition(latLng) {
-            document.getElementById('info').innerHTML = [
-                latLng.lat(),
-                latLng.lng()
-            ].join(', ');
-        }*/
-
         function updateMarkerAddress(str) {
             document.getElementById('address').innerHTML = str;
         }
@@ -266,29 +255,47 @@
         google.maps.event.addDomListener(window, 'load', initialize);
         function showNote() {
             var tab = {{ note | raw }};
-            $.each(tab, function (i, item) {
-                var marker = new google.maps.Marker({
-                    position: {lat: parseFloat(item.lat), lng: parseFloat(item.long)},
-                    map: map,
-                    animation: google.maps.Animation.DROP,
-                    icon:'http://www.google.com/mapfiles/marker'+montableau[i]+'.png',
-                    //icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-                    title: item.desc
+            var empty = {{ empty }};
+            if(empty == false);
+            {
+                $.each(tab, function (i, item) {
+                    var marker = new google.maps.Marker({
+                        position: {lat: parseFloat(item.lat), lng: parseFloat(item.long)},
+                        map: map,
+                        animation: google.maps.Animation.DROP,
+                        icon:'http://www.google.com/mapfiles/marker'+montableau[i]+'.png',
+                        //icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                        title: item.desc
+                    });
+                    //console.log(item.desc)
+                    bounds.extend(marker.getPosition());
+                    counter = i+1;
                 });
-                //console.log(item.desc)
-                bounds.extend(marker.getPosition());
-                counter = i;
-            });
+            }
+
         }
         function createTable(){
             var tab = {{ note | raw }};
-            $.each(tab, function (i, item) {
-                var callback;
-                geocodePositionTab(new google.maps.LatLng(parseFloat(item.lat),parseFloat(item.long)),function(callback){
-                    document.getElementById('tableNote').innerHTML += '<tr><td><img src="http://www.google.com/mapfiles/marker'+montableau[i]+'.png"/></td><td>'+item.desc+'</td><td>'+item.date+'</td><td>'+ callback +'</td></tr>';
-                });
+            var empty = {{ empty }};
+            if(empty == false)
+            {
+                $.each(tab, function (i, item) {
+                    var callback;
+                    geocodePositionTab(new google.maps.LatLng(parseFloat(item.lat), parseFloat(item.long)), function (callback) {
+                        document.getElementById('tableNote').innerHTML += '<tr style="cursor:pointer" onclick=window.location.href="'
+                                +window.location.href+'edit/'+item.id+'">' + '<td><img src="http://www.google.com/mapfiles/marker'
+                                + montableau[i] + '.png"/></td><td>' + item.desc + '</td><td>' + item.date + '</td><td>'
+                                + callback + '</td></tr>';
+                    });
 
-            });
+                });
+            }
+            else {document.getElementById('emptyTable').innerHTML = "<div class='alert alert-dismissable alert-warning'>" +
+                    "<button type='button' class='close' data-dismiss='alert'>×</button>" +
+                    "<h4>Attention!</h4><p>Vous n'avez encore ajouté aucun mémo.</p></div>";
+
+            }
+
 
         }
 
@@ -335,32 +342,21 @@
                             $("#addMemoFrom")[0].reset();
                             geocodePositionTab(new google.maps.LatLng(data["form[latitude]"],data["form[longitude]"]),function(callback){
                                 document.getElementById('tableNote').innerHTML +=
-                                    '<tr><td><img src="http://www.google.com/mapfiles/marker'+montableau[counter+1]+'.png"/></td>' +
-                                    '<td>'+data["form[title]"]+'</td><td>'+data["form[datealarm]"]+'</td><td>'+ callback +'</td></tr>'
+                                    '<tr><td><img src="http://www.google.com/mapfiles/marker'+montableau[counter]+'.png"/></td>' +
+                                    '<td>'+data["form[title]"]+'</td><td>'+data["form[datealarm]"]+'</td><td>'+ callback +'</td></tr>';
+                                var marker = new google.maps.Marker({
+                                    position: {lat: parseFloat(data["form[latitude]"]), lng: parseFloat(data["form[longitude]"]) },
+                                    map: map,
+                                    animation: google.maps.Animation.DROP,
+                                    icon:'http://www.google.com/mapfiles/marker'+montableau[counter]+'.png',
+                                    //icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                                    title: data["form[title]"]
+                                });
+                                counter++;
                             });
-                            var marker = new google.maps.Marker({
-                                position: {lat: parseFloat(data["form[latitude]"]), lng: parseFloat(data["form[longitude]"]) },
-                                map: map,
-                                animation: google.maps.Animation.DROP,
-                                icon:'http://www.google.com/mapfiles/marker'+montableau[counter+1]+'.png',
-                                //icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-                                title: data["form[title]"]
-                            });
-                            counter++;
                         }
                     }
                 });
-               /* $value=$(this).serialize();
-                document.getElementById('modal-body-body').innerHTML = $value;
-
-
-                $.post(document.location.url, $(this).serialize(), function(data){
-                    $feedback = $("<div>").html(data).find(".form-feedback").hide();
-
-                    $form.prepend($feedback);
-                    //document.getElementById('modal-body-body').innerHTML = $data;
-                    $feedback.fadeIn(1500);
-                });*/
             });
         });
 

@@ -1,0 +1,223 @@
+{% extends "base.html.twig" %}
+{% block content %}
+
+
+    <div id="complete-dialog" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <div id="map"></div>
+                    <div id="infoPanel">
+                        <b>Adresse estimée:</b>
+                        <div id="address"></div>
+                    </div>
+                    <div style="text-align: center">
+                        <button class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        <a href="" class="btn btn-info btn-raised" id="editLatlng">Modifier</a>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    {{ form_start(form, {'attr': {'class': 'form-horizontal','id':'addMemoFrom'}}) }}
+    {{ form_errors(form) }}
+    <fieldset>
+        <legend>Editer un mémo</legend>
+        <div id ="form-feedback" class="form-feedback"></div>
+        <div class="form-group">
+            {{ form_label(form.datealarm, "Date", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+            {{ form_errors(form.datealarm) }}
+            <div class="col-lg-10">
+                <div class='input-group date' id='datePicker'>
+                    {{ form_widget(form.datealarm, {'attr': {'class': 'form-control'}}) }}
+                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.latitude, "Latitude", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+            {{ form_errors(form.latitude) }}
+            <div class="col-lg-10">
+                {{ form_widget(form.latitude, {'attr': {'class': 'form-control','readonly':'readonly'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.longitude, "Longitude", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+            {{ form_errors(form.longitude) }}
+            <div class="col-lg-10">
+                {{ form_widget(form.longitude, {'attr': {'class': 'form-control','readonly':'readonly'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.title, "Titre", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+            {{ form_errors(form.title) }}
+            <div class="col-lg-10">
+                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.memo, "Description", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+            {{ form_errors(form.memo) }}
+            <div class="col-lg-10">
+                {{ form_widget(form.memo, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <div class="col-lg-10 col-lg-offset-2">
+                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+            </div>
+        </div>
+    </fieldset>
+    {{ form_rest(form) }}
+
+    {{ form_end(form) }}
+    <style>
+        legend{
+            text-align: center;
+        }
+        h3{
+            text-align: center;
+        }
+        #map {
+            margin-left: 20px;
+            width: 500px;
+            height: 600px;
+            float: left;
+        }
+        #infoPanel {
+            text-align: center;
+            margin-left: 10px;
+        }
+        #infoPanel div {
+            margin-bottom: 5px;
+        }
+    </style>
+    <link rel="stylesheet" href="//www.bruminator.eu/includes/css/bootstrap-datetimepicker.min.css">
+    <script src="//www.bruminator.eu/includes/js/moment-with-locales.min.js"></script>
+    <script src="//www.bruminator.eu/includes/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script>
+
+        var geocoder = new google.maps.Geocoder();
+        var map;
+        var personnalMarker;
+        function geocodePositionTab(pos,callback) {
+            geocoder.geocode({
+                latLng: pos
+            }, function(responses) {
+                if (responses && responses.length > 0) {
+                    callback(responses[0].formatted_address);
+                } else {
+                    callback('Cannot determine address at this location.');
+                }
+            });
+        }
+        function geocodePosition(pos) {
+            geocoder.geocode({
+                latLng: pos
+            }, function(responses) {
+                if (responses && responses.length > 0) {
+                    updateMarkerAddress(responses[0].formatted_address);
+                } else {
+                    updateMarkerAddress('Cannot determine address at this location.');
+                }
+            });
+        }
+        function updateMarkerAddress(str) {
+            document.getElementById('address').innerHTML = str;
+        }
+        //var map;
+        function initialize() {
+            var latLng = new google.maps.LatLng(50.8504500, 4.3487800);
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: latLng,
+                zoom: 8
+            });
+            var infoWindow = new google.maps.InfoWindow({map: map});
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    infoWindow.setPosition(pos);
+                    map.setCenter(pos);
+                    personnalMarker.setPosition(pos);
+                    personnalMarker.setVisible(true);
+                    //updateMarkerPosition(map.getCenter());
+                    geocodePosition(map.getCenter());
+                }, function() {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+                personnalMarker.setVisible(true);
+                updateMarkerPosition(map.getCenter());
+                personnalMarker.setVisible(true);
+                geocodePosition(map.getCenter());
+            }
+            personnalMarker = new google.maps.Marker({
+                position: map.getCenter(),
+                map: map,
+                draggable: true,
+                title: 'Ajouter un mémo',
+                icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+                visible: false
+            });
+
+            google.maps.event.addListener(personnalMarker, 'dragstart', function() {
+                updateMarkerAddress('Déplacement...');
+            });
+
+            google.maps.event.addListener(personnalMarker, 'dragend', function() {
+                geocodePosition(personnalMarker.getPosition());
+            });
+            google.maps.event.addListener(map, 'rightclick', function(event) {
+                personnalMarker.setPosition(event.latLng);
+                geocodePosition(personnalMarker.getPosition());
+            });
+
+        }
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                    'Error: The Geolocation service failed.' :
+                    'Error: Your browser doesn\'t support geolocation.');
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+
+        $(function () {
+            $('#form_datealarm').datetimepicker({locale:"fr",showTodayButton: true,
+                stepping : 5,
+                format : "DD-MM-YYYY HH:mm"});
+        });
+        $('#form_latitude').on('focus',function(){
+            $('#complete-dialog').modal('show');
+        });
+        $('#form_longitude').on('focus',function(){
+            $('#complete-dialog').modal('show');
+        });
+        $('#complete-dialog').on('shown.bs.modal', function () {
+            google.maps.event.trigger(map, "resize");
+        });
+        $('#editLatlng').on('click', function(e) {
+            e.preventDefault();
+            $('#form_latitude').empty().val(personnalMarker.getPosition().lat());
+            $('#form_longitude').empty().val(personnalMarker.getPosition().lng());
+            $('#complete-dialog').modal('hide');
+        });
+    </script>
+{% endblock %}
