@@ -18,4 +18,18 @@ class AlarmRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findNotArchivedAlarms($groups){
+        $qb = $this->createQueryBuilder('a');
+
+        $qb
+            ->where('a.deletedAt IS NULL')
+            ->andwhere('a.group_id = :groups')
+            ->setParameter('groups', $groups)
+        ;
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
 }

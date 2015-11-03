@@ -4,10 +4,11 @@ namespace EPHEC\Bundle\NoteBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use EPHEC\Bundle\NoteBundle\Entity\Alarm;
+use EPHEC\Bundle\NoteBundle\Repository;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
+    public function indexAction($val=0)
     {
         //usermanager get current user
         //
@@ -19,16 +20,25 @@ class DefaultController extends Controller
         //$note = json_encode($tab);
         $tab2 = array();
 
-        //ajout form on test ca va jamais marcher
         $alarm = new Alarm();
         $em = $this->getDoctrine()->getManager();
         $groups = $this->getUser()->getGroup();
         $alarms = array();
         foreach($groups as $group){
-            $alarms[] = $em->getRepository("EPHECNoteBundle:Alarm")->findBy(array('group'=>$group)); // alarms ==> tableau d'alarmes
+            //$alarms[] = $em->getRepository("EPHECNoteBundle:Alarm")->findBy(array('group'=>$group)); // alarms ==> tableau d'alarmes
+            // AJOUT DE CODE EXPLOSION
+            $repository = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('EPHECNoteBundle:Alarm')
+            ;
+            $alarms[] = $repository->findNotArchivedAlarms($group); //EXPLOSION
+
+            //FIN D AJOUT DE CODE EXPLOSION
 
         }
         //ajouter un boucle
+        print_r($alarms[0]);
         if(!empty($alarms) && !empty($alarms[0])){
             $empty = 0;
             foreach($alarms[0] as $value){
@@ -43,7 +53,6 @@ class DefaultController extends Controller
 
         $formBuilder = $this->get('form.factory')->createBuilder('form', $alarm);
         $formBuilder
-            //->add('datealarm','text')
             ->add('datealarm', 'date', [
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy HH:mm',
@@ -56,12 +65,8 @@ class DefaultController extends Controller
             ->add('save', 'submit');
         $form = $formBuilder->getForm();
         //fin ajout form
-
-
-
-
         return $this->render('EPHECNoteBundle:Default:index.html.twig', array('note' => $note, 'form' => $form->createView(),
-            'empty' => $empty ));
+            'empty' => $empty, 'val' => $val ));
     }
     public function addMemoAction(){
         if ($this->get('request')->getMethod() == 'POST') {
@@ -82,9 +87,9 @@ class DefaultController extends Controller
                 $res = json_encode(array('res' => true));
                 return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('res' => $res));
             }
-            else return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('name' => false));
+            else return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('res' => false));
         }
-        else return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('name' => false));
+        else return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('res' => false));
     }
     public function editMemoAction($idMemo){
 
@@ -127,5 +132,18 @@ class DefaultController extends Controller
         }
 
         return $this->render('EPHECNoteBundle:Default:edit.html.twig', array('id' => $idMemo,'form' => $form->createView()));
+    }
+    public function archiveMemoAction($idMemo){
+        $em = $this->getDoctrine()->getEntityManager();
+        $alarm = $em->getRepository("EPHECNoteBundle:Alarm")->find($idMemo);
+        $alarm->setDeletedAt(new \DateTime('now'));
+        $em->flush();
+
+        $res = json_encode(array('res' => true));
+        return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('res' => $res));
+
+    }
+    public function archiveListAction(){
+        return $this->render('EPHECNoteBundle:Default:archivedList.html.twig');
     }
 }

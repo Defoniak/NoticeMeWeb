@@ -91,8 +91,14 @@
             </div>
         </div>
     </div>
+    <!-- MODAL 3 -->
+
     <!-- FIN DE MODAL -->
     <div><h3>Vos mémos</h3></div>
+    <div id="memoArchived" class="alert alert-dismissable alert-success hidden center-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        Votre mémo a été correctement archivé
+    </div>
     <div id="map"></div>
     <div style = float:left;>
     <div id="tabNote"><table id="tableNote" class="table table-striped table-hover ">
@@ -137,6 +143,9 @@
         #createNote{
             display: block;
             margin : auto;
+        }
+        .alert {
+            width:30%;
         }
     </style>
     <link rel="stylesheet" href="//www.bruminator.eu/includes/css/bootstrap-datetimepicker.min.css">
@@ -226,13 +235,7 @@
                 updateMarkerAddress('Déplacement...');
             });
 
-            /*google.maps.event.addListener(personnalMarker, 'drag', function() {
-                //updateMarkerStatus('Dragging...');
-                //updateMarkerPosition(personnalMarker.getPosition());
-            });*/
-
             google.maps.event.addListener(personnalMarker, 'dragend', function() {
-                //updateMarkerStatus('Drag ended');
                 geocodePosition(personnalMarker.getPosition());
             });
             google.maps.event.addListener(map, 'rightclick', function(event) {
@@ -358,6 +361,13 @@
                     }
                 });
             });
+        });
+        $(document).ready(function(){
+            var val = {{ val }};
+            if(val == 1){
+                memoArchived
+                $('#memoArchived').removeClass('hidden');
+            }
         });
 
     </script>

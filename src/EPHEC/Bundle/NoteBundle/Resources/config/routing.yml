@@ -7,3 +7,12 @@ ephec_note_addMemo:
 ephec_note_editMemo:
     path:     /edit/{idMemo}
     defaults: { _controller: EPHECNoteBundle:Default:editMemo }
+ephec_note_archive:
+    path:     /archive/{idMemo}
+    defaults: { _controller: EPHECNoteBundle:Default:archiveMemo }
+ephec_note_archived:
+    path:     /archived/{val}
+    defaults: { _controller: EPHECNoteBundle:Default:index }
+ephec_note_archivedMemo:
+    path:     /archivedMemo
+    defaults: { _controller: EPHECNoteBundle:Default:archiveList }
