@@ -168,7 +168,7 @@
                 if (responses && responses.length > 0) {
                     callback(responses[0].formatted_address);
                 } else {
-                    callback('Cannot determine address at this location.');
+                    callback('Adresse non determinée');
                 }
             });
         }
@@ -179,7 +179,7 @@
                 if (responses && responses.length > 0) {
                     updateMarkerAddress(responses[0].formatted_address);
                 } else {
-                    updateMarkerAddress('Cannot determine address at this location.');
+                    updateMarkerAddress('Adresse non determinée');
                 }
             });
         }
@@ -290,16 +290,12 @@
                                 + montableau[i] + '.png"/></td><td>' + item.desc + '</td><td>' + item.date + '</td><td>'
                                 + callback + '</td></tr>';
                     });
-
                 });
             }
             else {document.getElementById('emptyTable').innerHTML = "<div class='alert alert-dismissable alert-warning'>" +
                     "<button type='button' class='close' data-dismiss='alert'>×</button>" +
                     "<h4>Attention!</h4><p>Vous n'avez encore ajouté aucun mémo.</p></div>";
-
             }
-
-
         }
 
         $('#createNote').on('click', function() {
