@@ -161,4 +161,22 @@ class DefaultController extends Controller
 
         return $this->render('EPHECNoteBundle:Default:archivedList.html.twig', array('note' => $note, 'empty' => $empty));
     }
+    public function archiveListArchiveAction($idMemo){
+        $em = $this->getDoctrine()->getEntityManager();
+        $alarm = $em->getRepository("EPHECNoteBundle:Alarm")->find($idMemo);
+        $alarm->setDeletedAt(new \DateTime('now'));
+        $em->flush();
+
+        $res = json_encode(array('res' => true));
+        return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('res' => $res));
+    }
+    public function archiveListActiveAction($idMemo){
+        $em = $this->getDoctrine()->getEntityManager();
+        $alarm = $em->getRepository("EPHECNoteBundle:Alarm")->find($idMemo);
+        $alarm->setDeletedAt(null);
+        $em->flush();
+
+        $res = json_encode(array('res' => true));
+        return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('res' => $res));
+    }
 }

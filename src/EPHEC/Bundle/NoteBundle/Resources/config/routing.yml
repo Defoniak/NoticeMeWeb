@@ -16,3 +16,9 @@ ephec_note_archived:
 ephec_note_archivedMemo:
     path:     /archivedMemo
     defaults: { _controller: EPHECNoteBundle:Default:archiveList }
+ephec_note_archivedMemoArchive:
+    path:     /archivedMemo/archive/{idMemo}
+    defaults: { _controller: EPHECNoteBundle:Default:archiveListArchive }
+ephec_note_archivedMemoActive:
+    path:     /archivedMemo/active/{idMemo}
+    defaults: { _controller: EPHECNoteBundle:Default:archiveListActive }

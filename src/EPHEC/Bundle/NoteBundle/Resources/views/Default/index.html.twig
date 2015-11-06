@@ -334,7 +334,6 @@
                     success: function(response){
                         if (response["res"]==true){
                             console.log('ok');
-                            //console.log(data["form[datealarm]"]); //form[latitude] form[longitude] form[title] form[memo]
                             $('#complete-dialog').modal('hide');
                             $('#memoAdded').modal('show');
                             setTimeout(function() {$('#memoAdded').modal('hide');}, 2500);
@@ -361,7 +360,6 @@
         $(document).ready(function(){
             var val = {{ val }};
             if(val == 1){
-                memoArchived
                 $('#memoArchived').removeClass('hidden');
             }
         });
