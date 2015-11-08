@@ -35,7 +35,7 @@ h6 {
     padding-bottom: 50px;
     text-align: center;
     color: #f8f8f8;
-    background: url(https://raw.githubusercontent.com/IronSummitMedia/startbootstrap-landing-page/gh-pages/img/intro-bg.jpg) no-repeat center center;
+    background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url(../images/landing-test.png) no-repeat center center;
     background-size: cover;
 }
 
@@ -52,7 +52,7 @@ h6 {
 }
 
 .intro-divider {
-    width: 400px;
+    width: 600px;
     border-top: 1px solid #f8f8f8;
     border-bottom: 1px solid rgba(0,0,0,0.2);
 }
@@ -87,8 +87,8 @@ h6 {
 
 .network-name {
     text-transform: uppercase;
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 16px;
+    font-weight: 600;
     letter-spacing: 2px;
 }
 
@@ -116,7 +116,7 @@ h6 {
 .banner {
     padding: 100px 0;
     color: #f8f8f8;
-    background: url(https://raw.githubusercontent.com/IronSummitMedia/startbootstrap-landing-page/gh-pages/img/banner-bg.jpg) no-repeat center center;
+    background: url(http://images.frandroid.com/wp-content/uploads/2015/10/google-play-store.png) no-repeat center center;
     background-size: cover;
 }
 
@@ -167,4 +167,7 @@ footer {
 
 p.copyright {
     margin: 15px 0 0;
+}
+.navbar {
+    margin-bottom: 0;
 }
