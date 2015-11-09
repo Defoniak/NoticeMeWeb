@@ -109,6 +109,9 @@
                 });
             }
         }
+        function deleteMemo(id){
+            console.log(id);
+        }
         function createTable(){
             var tab = {{ note | raw }};
             var empty = {{ empty }};
@@ -121,7 +124,7 @@
                             document.getElementById('tableNote').innerHTML += '<tr><td>' + item.desc + '</td><td>' + item.date + '</td><td>'
                                     + callback + '</td><td>'+'<input class="checkAjax" id="chkbx'+item.id+'" data-id="'+item.id
                                     +'" type="checkbox" onchange=checkBoxTrigger('+item.id+')>'+'</td><td>'+
-                                    '<a href="javascript:void(0)" class="btn btn-info btn-xs">Delete</a></td>'+'</tr>';
+                                    '<a href="javascript:deleteMemo('+item.id+')" class="btn btn-info btn-xs">Delete</a></td>'+'</tr>';
                         });
                     }
                     else{
@@ -129,7 +132,7 @@
                             document.getElementById('tableNote').innerHTML += '<tr><td>' + item.desc + '</td><td>' + item.date + '</td><td>'
                                     + callback + '</td><td>'+'<input class="checkAjax" id="chkbx'+item.id+'" data-id="'+item.id
                                     +'" type="checkbox" checked onchange=checkBoxTrigger('+item.id+')>'+'</td><td>'+
-                                    '<a href="javascript:void(0)" class="btn btn-info btn-xs">Delete</a></td>'+'</tr>';
+                                    '<a href="javascript:deleteMemo('+item.id+')" class="btn btn-info btn-xs">Delete</a></td>'+'</tr>';
                         });
                     }
 

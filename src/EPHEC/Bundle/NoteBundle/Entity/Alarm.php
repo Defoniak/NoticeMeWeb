@@ -14,7 +14,7 @@ class Alarm
 {
     /**
      *
-     * @ORM\Column(name="dateAlarm", type="datetime", nullable=false)
+     * @ORM\Column(name="dateAlarm", type="datetime", nullable=true)
      */
     private $datealarm;
 
