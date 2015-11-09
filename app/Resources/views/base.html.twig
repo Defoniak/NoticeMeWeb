@@ -12,7 +12,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/roboto.min.css">
-        <link rel="stylesheet" href="{{ asset('bundles/EPHEC/css/landing_page.css') }}">
         <!-- Dropdown.js -->
         <link href="//cdn.rawgit.com/FezVrasta/dropdown.js/master/jquery.dropdown.css" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('bundles/EPHEC/css/styles3.css') }}" type="text/css" />
@@ -37,9 +36,9 @@
         </div>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
-                <li class="active ne"><a href="{{ path('ephec_note_homepage') }}">Accueil</a></li>
-                <li><a href="{{ path('ephec_note_homepage') }}" class="ne">Présentation</a></li>
-                {# <li><a href="{{ path('ephec_note_archivedMemo') }}" class="ne">Mémos Archivés</a></li> #}
+                <li class="active ne"><a href="{{ path('ephec_note_homepage') }}">Home</a></li>
+                {#<li><a href="{{ path('ephec_note_homepage') }}" class="ne">Présentation</a></li>#}
+                <li><a href="{{ path('ephec_note_archivedMemo') }}" class="ne">Archived Mémo</a></li>
                 <!--<li class="dropdown">
                     <a href="http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html" data-target="#" class="dropdown-toggle ne" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -63,12 +62,12 @@
                         <ul class="dropdown-menu">
                             <li><a href="{{ path('fos_user_profile_show') }}">Profil</a></li>
                             <li class="divider"></li>
-                            <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+                            <li><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
                         </ul>
                     </li>
                 {% else %}
-                    <li><a href="{{path('fos_user_registration_register')}}" class="ne">Inscription</a></li>
-                    <li><a href="{{path('fos_user_security_login')}}" class="ne">Connexion</a></li>
+                    <li><a href="{{path('fos_user_registration_register')}}" class="ne">Sign in</a></li>
+                    <li><a href="{{path('fos_user_security_login')}}" class="ne">Login</a></li>
                 {% endif %}
             </ul>
         </div>

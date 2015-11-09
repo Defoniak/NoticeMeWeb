@@ -12,7 +12,7 @@
                     {{ form_start(form, {'attr': {'class': 'form-horizontal','id':'addMemoFrom'}}) }}
                     {{ form_errors(form) }}
                     <fieldset>
-                        <legend>Ajout d'un mémo</legend>
+                        <legend>Add a memo</legend>
                         <div id ="form-feedback" class="form-feedback"></div>
                         <div class="form-group">
                             {{ form_label(form.datealarm, "Date", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            {{ form_label(form.title, "Titre", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+                            {{ form_label(form.title, "Title", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
                             {{ form_errors(form.title) }}
                             <div class="col-lg-10">
                                 {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
@@ -86,7 +86,7 @@
                 </div>
                 <div class="modal-body" id="modal-body">
 
-                    <span id="modal-body-body">Votre mémo a été correctement ajouté</span>
+                    <span id="modal-body-body">Mémo added</span>
                 </div>
             </div>
         </div>
@@ -94,10 +94,10 @@
     <!-- MODAL 3 -->
 
     <!-- FIN DE MODAL -->
-    <div><h3>Vos mémos</h3></div>
+    <div><h3>Your memo</h3></div>
     <div id="memoArchived" class="alert alert-dismissable alert-success hidden center-block">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        Votre mémo a été correctement archivé
+        Mémo Archived
     </div>
     <div id="map"></div>
     <div style = float:left;>
@@ -106,13 +106,13 @@
                 <th></th>
                 <th>Description</th>
                 <th>Date</th>
-                <th>Adresse</th>
+                <th>Address</th>
             </tr>
         </table> </div>
         <div id ="emptyTable"></div>
     <div style="clear:left;"></div>
         <div id="infoPanel">
-            <b>Adresse estimée:</b>
+            <b>Estimated address:</b>
             <div id="address"></div>
         </div>
         <div style="clear:left;"></div>
@@ -168,7 +168,7 @@
                 if (responses && responses.length > 0) {
                     callback(responses[0].formatted_address);
                 } else {
-                    callback('Adresse non determinée');
+                    callback('Cannot determine address at this location.');
                 }
             });
         }
@@ -179,7 +179,7 @@
                 if (responses && responses.length > 0) {
                     updateMarkerAddress(responses[0].formatted_address);
                 } else {
-                    updateMarkerAddress('Adresse non determinée');
+                    updateMarkerAddress('Cannot determine address at this location.');
                 }
             });
         }
@@ -223,7 +223,7 @@
                 position: map.getCenter(),
                 map: map,
                 draggable: true,
-                title: 'Ajouter un mémo',
+                title: 'Add a memo',
                 icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
                 visible: false
             });
@@ -294,7 +294,7 @@
             }
             else {document.getElementById('emptyTable').innerHTML = "<div class='alert alert-dismissable alert-warning'>" +
                     "<button type='button' class='close' data-dismiss='alert'>×</button>" +
-                    "<h4>Attention!</h4><p>Vous n'avez encore ajouté aucun mémo.</p></div>";
+                    "<h4>Attention!</h4><p>No mémo added yet</p></div>";
             }
         }
 

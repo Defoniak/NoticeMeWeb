@@ -10,11 +10,11 @@
                     <h4 class="modal-title">Archiver un mémo</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Vous êtes sur le point d'archiver ce mémo, voulez vous continuer?</p>
+                    <p>Archive this memo ?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                    <button type="button" class="btn btn-primary" id="archive-button">Archiver</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="archive-button">Archive</button>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                 <div class="modal-header">
                 </div>
                 <div class="modal-body" id="modal-body">
-                    <span id="modal-body-body">Votre mémo a été correctement archivé</span>
+                    <span id="modal-body-body">Memo archived</span>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
                 <div class="modal-header">
                 </div>
                 <div class="modal-body" id="modal-body">
-                    <span id="modal-body-body">Votre mémo a été correctement réactivé</span>
+                    <span id="modal-body-body">Memo actived</span>
                 </div>
             </div>
         </div>
@@ -48,8 +48,8 @@
             <tr>
                 <th>Description</th>
                 <th>Date</th>
-                <th>Adresse</th>
-                <th>Archiver</th>
+                <th>Address</th>
+                <th>Archive</th>
                 <th></th>
             </tr>
         </table>
@@ -137,7 +137,7 @@
             }
             else {document.getElementById('emptyTable').innerHTML = "<div class='alert alert-dismissable alert-warning'>" +
                     "<button type='button' class='close' data-dismiss='alert'>×</button>" +
-                    "<h4>Attention!</h4><p>Vous n'avez encore ajouté aucun mémo.</p></div>";
+                    "<h4>Warning!</h4><p>No memo added yet.</p></div>";
             }
         }
     </script>

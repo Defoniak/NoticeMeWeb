@@ -11,12 +11,12 @@
                 <div class="modal-body" id="modal-body">
                     <div id="map"></div>
                     <div id="infoPanel">
-                        <b>Adresse estimée:</b>
+                        <b>Estimated address:</b>
                         <div id="address"></div>
                     </div>
                     <div style="text-align: center">
-                        <button class="btn btn-default" data-dismiss="modal">Annuler</button>
-                        <a href="" class="btn btn-info btn-raised" id="editLatlng">Modifier</a>
+                        <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <a href="" class="btn btn-info btn-raised" id="editLatlng">Edit</a>
                     </div>
 
                 </div>
@@ -31,14 +31,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Archiver un mémo</h4>
+                    <h4 class="modal-title">Archive a mémo</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Vous êtes sur le point d'archiver ce mémo, voulez vous continuer?</p>
+                    <p>This mémo will be archived</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                    <button type="button" class="btn btn-primary" id="archive-button">Archiver</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="archive-button">Archive</button>
                 </div>
             </div>
         </div>
@@ -47,12 +47,12 @@
     {{ form_start(form, {'attr': {'class': 'form-horizontal','id':'addMemoFrom'}}) }}
     {{ form_errors(form) }}
     <fieldset>
-        <legend>Editer un mémo</legend>
+        <legend>Edit a mémo</legend>
         <div id ="form-feedback" class="form-feedback"></div>
         <div class="form-group">
-            <label class="col-lg-2 control-label">Archiver ce mémo</label>
+            <label class="col-lg-2 control-label">Archive this mémo</label>
             <div class="col-lg-10">
-                    <input type="checkbox" class="checkbox" id="archive-checkbox"/> Vous pourrez le réactiver dans l'onglet "Mes archives"
+                    <input type="checkbox" class="checkbox" id="archive-checkbox"/> You can reactivate it in the "Archived mémo"
             </div>
         </div>
 
@@ -83,7 +83,7 @@
             </div>
         </div>
         <div class="form-group">
-            {{ form_label(form.title, "Titre", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+            {{ form_label(form.title, "Title", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
             {{ form_errors(form.title) }}
             <div class="col-lg-10">
                 {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
