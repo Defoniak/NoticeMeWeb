@@ -7,7 +7,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Archiver un mémo</h4>
+                    <h4 class="modal-title">Archive a memo</h4>
                 </div>
                 <div class="modal-body">
                     <p>Archive this memo ?</p>
@@ -59,11 +59,11 @@
         var geocoder = new google.maps.Geocoder();
         createTable();
 
-        $(document).ready(function(){
+        /*$(document).ready(function(){
             $("input[type='checkbox']").on('change', function(){
                 console.log("juju suce des bites");
             });
-        })
+        })*/
         function geocodePositionTab(pos,callback) {
             geocoder.geocode({
                 latLng: pos
@@ -71,7 +71,7 @@
                 if (responses && responses.length > 0) {
                     callback(responses[0].formatted_address);
                 } else {
-                    callback('Adresse non déterminée');
+                    callback('Cannot determine address at this location.');
                 }
             })
         }
@@ -121,7 +121,7 @@
                             document.getElementById('tableNote').innerHTML += '<tr><td>' + item.desc + '</td><td>' + item.date + '</td><td>'
                                     + callback + '</td><td>'+'<input class="checkAjax" id="chkbx'+item.id+'" data-id="'+item.id
                                     +'" type="checkbox" onchange=checkBoxTrigger('+item.id+')>'+'</td><td>'+
-                                    '<a href="javascript:void(0)" class="btn btn-info btn-xs">Supprimer</a></td>'+'</tr>';
+                                    '<a href="javascript:void(0)" class="btn btn-info btn-xs">Delete</a></td>'+'</tr>';
                         });
                     }
                     else{
@@ -129,7 +129,7 @@
                             document.getElementById('tableNote').innerHTML += '<tr><td>' + item.desc + '</td><td>' + item.date + '</td><td>'
                                     + callback + '</td><td>'+'<input class="checkAjax" id="chkbx'+item.id+'" data-id="'+item.id
                                     +'" type="checkbox" checked onchange=checkBoxTrigger('+item.id+')>'+'</td><td>'+
-                                    '<a href="javascript:void(0)" class="btn btn-info btn-xs">Supprimer</a></td>'+'</tr>';
+                                    '<a href="javascript:void(0)" class="btn btn-info btn-xs">Delete</a></td>'+'</tr>';
                         });
                     }
 
@@ -137,7 +137,7 @@
             }
             else {document.getElementById('emptyTable').innerHTML = "<div class='alert alert-dismissable alert-warning'>" +
                     "<button type='button' class='close' data-dismiss='alert'>×</button>" +
-                    "<h4>Warning!</h4><p>No memo added yet.</p></div>";
+                    "<h4>Warning!</h4><p>No memo added yet</p></div>";
             }
         }
     </script>
