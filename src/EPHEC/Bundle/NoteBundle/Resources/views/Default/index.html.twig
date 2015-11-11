@@ -5,7 +5,6 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-
                 </div>
                 <div class="modal-body" id="modal-body">
 
@@ -70,9 +69,13 @@
                     <span id="modal-body-body"></span>
                 </div>
 
-               {#<div class="modal-footer">
-                    <button class="btn btn-primary" data-dismiss="modal">Ajouter</button>
-                </div>#}
+               <div class="modal-footer">
+                   <div class="spinner" id="spinner">
+                       <div class="bounce1"></div>
+                       <div class="bounce2"></div>
+                       <div class="bounce3"></div>
+                   </div>
+                </div>
             </div>
         </div>
     </div>
@@ -146,6 +149,50 @@
         }
         .alert {
             width:30%;
+        }
+
+
+        .spinner {
+            margin: 100px auto 0;
+            width: 70px;
+            text-align: center;
+            display: none;
+        }
+
+        .spinner > div {
+            width: 18px;
+            height: 18px;
+            background-color: #333;
+
+            border-radius: 100%;
+            display: inline-block;
+            -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+            animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+        }
+
+        .spinner .bounce1 {
+            -webkit-animation-delay: -0.32s;
+            animation-delay: -0.32s;
+        }
+
+        .spinner .bounce2 {
+            -webkit-animation-delay: -0.16s;
+            animation-delay: -0.16s;
+        }
+
+        @-webkit-keyframes sk-bouncedelay {
+            0%, 80%, 100% { -webkit-transform: scale(0) }
+            40% { -webkit-transform: scale(1.0) }
+        }
+
+        @keyframes sk-bouncedelay {
+            0%, 80%, 100% {
+                -webkit-transform: scale(0);
+                transform: scale(0);
+            } 40% {
+                  -webkit-transform: scale(1.0);
+                  transform: scale(1.0);
+              }
         }
     </style>
     <link rel="stylesheet" href="//www.bruminator.eu/includes/css/bootstrap-datetimepicker.min.css">
@@ -313,6 +360,7 @@
         $(function (){
             $('#addMemoFrom').submit(function(e){
                 e.preventDefault();
+                document.getElementById('spinner').style.display='block';
                 $form =$(this);
                 var that = $(this),
                         url = (that.attr('action')+"add"),
@@ -334,6 +382,7 @@
                     success: function(response){
                         if (response["res"]==true){
                             console.log('ok');
+                            document.getElementById('spinner').style.display='none';
                             $('#complete-dialog').modal('hide');
                             $('#memoAdded').modal('show');
                             setTimeout(function() {$('#memoAdded').modal('hide');}, 2500);
