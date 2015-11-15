@@ -8,7 +8,7 @@ use EPHEC\Bundle\NoteBundle\Repository;
 
 class DefaultController extends Controller
 {
-    public function indexAction($val=0)
+    public function indexAction($val=0,$currentPage=1, $max=10)
     {
         $tab2 = array();
         $alarm = new Alarm();
@@ -31,6 +31,10 @@ class DefaultController extends Controller
                 ->andwhere('a.group = :groups')
                 ->setParameter('groups', $group)
                 ->getQuery();
+            $count=count($query->getResult());
+            $page=ceil($count/$max);
+            $query->setFirstResult(($currentPage-1) * $max)
+                ->setMaxResults($max);
             $alarms[]= $query->getResult();
             //FIN D AJOUT DE CODE EXPLOSION\
         }
@@ -63,7 +67,7 @@ class DefaultController extends Controller
         $form = $formBuilder->getForm();
         //fin ajout form
         return $this->render('EPHECNoteBundle:Default:index.html.twig', array('note' => $note, 'form' => $form->createView(),
-            'empty' => $empty, 'val' => $val ));
+            'empty' => $empty, 'val' => $val, 'page' => $page, 'currentPage' => $currentPage));
     }
     public function addMemoAction(){
         if ($this->get('request')->getMethod() == 'POST') {

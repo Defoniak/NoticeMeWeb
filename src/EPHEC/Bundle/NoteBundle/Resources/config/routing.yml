@@ -22,3 +22,6 @@ ephec_note_archivedMemoArchive:
 ephec_note_archivedMemoActive:
     path:     /archivedMemo/active/{idMemo}
     defaults: { _controller: EPHECNoteBundle:Default:archiveListActive }
+ephec_note_homepagenition:
+    path:     /page/{currentPage}
+    defaults: { _controller: EPHECNoteBundle:Default:index }
