@@ -81,7 +81,8 @@ class DefaultController extends Controller
                 $alarm->setMemo($_POST['form']['memo']);
                 $em->persist($alarm);
                 $em->flush();
-                $res = json_encode(array('res' => true));
+                $id=$alarm->getId();
+                $res = json_encode(array('res' => true,'id' => $id));
                 return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('res' => $res));
             }
             else return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('res' => false));

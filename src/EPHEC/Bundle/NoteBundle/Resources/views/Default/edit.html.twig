@@ -38,7 +38,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="archive-button">Archive</button>
+                    <button type="button" class="btn btn-primary" id="archive-buttonbis">Archive</button>
                 </div>
             </div>
         </div>
@@ -49,12 +49,7 @@
     <fieldset>
         <legend>Edit a mémo</legend>
         <div id ="form-feedback" class="form-feedback"></div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Archive this mémo</label>
-            <div class="col-lg-10">
-                    <input type="checkbox" class="checkbox" id="archive-checkbox"/> You can reactivate it in the "Archived mémo"
-            </div>
-        </div>
+
 
         <div class="form-group">
             {{ form_label(form.datealarm, "Date", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
@@ -97,11 +92,12 @@
             </div>
         </div>
 
-        <div class="modal-footer">
-            <div class="col-lg-10 col-lg-offset-2">
-                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button id="archive-button" class="btn btn-warning btn-raised">Archive</button>
+                    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary btn-raised'}}) }}
+                </div>
             </div>
-        </div>
     </fieldset>
     {{ form_rest(form) }}
 
@@ -263,7 +259,7 @@
                 data: split[1],
                 success: function(response){
                     if(response["res"]==true){
-                        $('#archive-memo').modal('hide');
+                        //$('#archive-memo').modal('hide');
                         document.location.href = split[0]+'/archived/1';
                     }
                 }

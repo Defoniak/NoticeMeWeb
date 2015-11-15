@@ -385,11 +385,13 @@
                             document.getElementById('spinner').style.display='none';
                             $('#complete-dialog').modal('hide');
                             $('#memoAdded').modal('show');
+                            console.log(response["id"]);
                             setTimeout(function() {$('#memoAdded').modal('hide');}, 2500);
                             $("#addMemoFrom")[0].reset();
                             geocodePositionTab(new google.maps.LatLng(data["form[latitude]"],data["form[longitude]"]),function(callback){
                                 document.getElementById('tableNote').innerHTML +=
-                                    '<tr><td><img src="http://www.google.com/mapfiles/marker'+montableau[counter]+'.png"/></td>' +
+                                        '<tr style="cursor:pointer" onclick=window.location.href="'
+                                        +window.location.href+'edit/'+response["id"]+'">' +'<td><img src="http://www.google.com/mapfiles/marker'+montableau[counter]+'.png"/></td>' +
                                     '<td>'+data["form[title]"]+'</td><td>'+data["form[datealarm]"]+'</td><td>'+ callback +'</td></tr>';
                                 var marker = new google.maps.Marker({
                                     position: {lat: parseFloat(data["form[latitude]"]), lng: parseFloat(data["form[longitude]"]) },
