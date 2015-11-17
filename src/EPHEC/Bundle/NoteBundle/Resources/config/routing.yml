@@ -25,3 +25,9 @@ ephec_note_archivedMemoActive:
 ephec_note_homepagenition:
     path:     /page/{currentPage}
     defaults: { _controller: EPHECNoteBundle:Default:index }
+ephec_note_archivedMemoPagenition:
+    path:     /archivedMemo/page/{currentPage}
+    defaults: { _controller: EPHECNoteBundle:Default:archiveList }
+ephec_note_archivedMemoDelete:
+    path:     /archivedMemo/delete/{idMemo}
+    defaults: { _controller: EPHECNoteBundle:Default:deleteMemo }

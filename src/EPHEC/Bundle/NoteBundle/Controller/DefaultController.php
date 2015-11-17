@@ -12,20 +12,11 @@ class DefaultController extends Controller
     {
         $tab2 = array();
         $alarm = new Alarm();
+        $page=0;
         $em = $this->getDoctrine()->getManager();
         $groups = $this->getUser()->getGroup();
         $alarms = array();
         foreach($groups as $group){
-            //$alarms[] = $em->getRepository("EPHECNoteBundle:Alarm")->findBy(array('group'=>$group)); // alarms ==> tableau d'alarmes
-            // AJOUT DE CODE EXPLOSION
-            /*$repository = $this
-                ->getDoctrine()
-                ->getManager()
-                ->getRepository('EPHECNoteBundle:Alarm')
-            ;*/
-            //$alarms[] = $repository->findNotArchivedAlarms($group); //EXPLOSION
-
-            /** @var  $repository \Doctrine\ORM\EntityManager */
             $query = $em->getRepository("EPHECNoteBundle:Alarm")->createQueryBuilder('a')
                 ->where('a.deletedAt IS NULL')
                 ->andwhere('a.group = :groups')
@@ -145,13 +136,17 @@ class DefaultController extends Controller
         return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('res' => $res));
 
     }
-    public function archiveListAction(){
+    public function archiveListAction($currentPage=1, $max=12){
         $tab = array();
         $em = $this->getDoctrine()->getManager();
         $groups = $this->getUser()->getGroup();
         $alarms = array();
+        $page=0;
         foreach($groups as $group){
-            $alarms[] = $em->getRepository("EPHECNoteBundle:Alarm")->findBy(array('group'=>$group)); // alarms ==> tableau d'alarmes
+            $count=count($em->getRepository("EPHECNoteBundle:Alarm")->findBy(array('group'=>$group)));
+            $test=($currentPage-1)*$max;
+            $alarms[] = $em->getRepository("EPHECNoteBundle:Alarm")->findBy(array('group'=>$group),array('datealarm' => 'ASC'),$max,$test); // alarms ==> tableau d'alarmes
+            $page=ceil($count/$max);
         }
         if(!empty($alarms) && !empty($alarms[0])){
             $empty = 0;
@@ -164,7 +159,7 @@ class DefaultController extends Controller
         else { $empty = 1;}
         $note = json_encode($tab);
 
-        return $this->render('EPHECNoteBundle:Default:archivedList.html.twig', array('note' => $note, 'empty' => $empty));
+        return $this->render('EPHECNoteBundle:Default:archivedList.html.twig', array('note' => $note, 'empty' => $empty, 'page'=>$page,'currentPage'=>$currentPage));
     }
     public function archiveListArchiveAction($idMemo){
         $em = $this->getDoctrine()->getEntityManager();
@@ -181,6 +176,14 @@ class DefaultController extends Controller
         $alarm->setDeletedAt(null);
         $em->flush();
 
+        $res = json_encode(array('res' => true));
+        return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('res' => $res));
+    }
+    public function deleteMemoAction($idMemo){
+        $em = $this->getDoctrine()->getEntityManager();
+        $alarm = $em->getRepository("EPHECNoteBundle:Alarm")->find($idMemo);
+        $em->remove($alarm);
+        $em->flush();
         $res = json_encode(array('res' => true));
         return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('res' => $res));
     }
