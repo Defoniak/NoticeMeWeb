@@ -5,3 +5,7 @@ ephec_main_homepage:
 ephec_android_login:
     path: /android/login
     defaults: { _controller: EPHECMainBundle:Default:androidlogin}
+
+ephec_android_register:
+    path: /android/register
+    defaults: { _controller: EPHECMainBundle:Default:androidregister}
