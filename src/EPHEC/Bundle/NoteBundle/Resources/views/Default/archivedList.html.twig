@@ -56,6 +56,7 @@
         </div>
     </div>
 <!--fin de modal -->
+<div class="container-fluid">
     <div id="tabNote"><table id="tableNote" class="table table-striped table-hover ">
             <tr>
                 <th>Description</th>
@@ -66,11 +67,18 @@
             </tr>
         </table>
     </div>
+</div>
+    <div id="footer">
+        <div style="text-align: center;bottom: 0;" class="center-block">
+            <ul class="pagination" id="paginator">
+            </ul>
+        </div>
+    </div>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script>
         var geocoder = new google.maps.Geocoder();
         createTable();
-
+        createPagination();
         /*$(document).ready(function(){
             $("input[type='checkbox']").on('change', function(){
                 console.log("juju suce des bites");
@@ -86,6 +94,25 @@
                     callback('Cannot determine address at this location.');
                 }
             })
+        }
+        function createPagination(){
+            var page = {{ page }};
+            var currentPage = {{ currentPage }};
+            var i=0;
+            while(i<page){
+                var count=i+1;
+                if(count==currentPage){
+                    document.getElementById('paginator').innerHTML +='<li class="active"><a href="javascript:createLink('+count+')">'+count+'</a></li>';
+                }
+                else{
+                    document.getElementById('paginator').innerHTML +='<li><a href="javascript:createLink('+count+')">'+count+'</a></li>';
+                }
+                i++;
+            }
+        }
+        function createLink(id){
+            var split2 = window.location.href.split("/page/");
+            document.location.href = split2[0]+'/page/'+id;
         }
         function checkBoxTrigger(id){
             if ($('#chkbx'+id).is(':checked')) {
@@ -126,7 +153,23 @@
             }
         }
         function deleteMemo(id){
-            console.log(id);
+            $('#loading').modal('show');
+            var split = window.location.href.split("/page/");
+            $.ajax({
+                url: split[0]+'/delete/'+id,
+                type: 'POST',
+                dataType: "json",
+                data: id,
+                success: function(response){
+                    if(response["res"]==true){
+                        console.log('memoActivé');
+                        $('#loading').modal('hide');
+                        // delete ligne in java
+                        var index= document.getElementById("memoId"+id).rowIndex;
+                        document.getElementById("tableNote").deleteRow(index);
+                    }
+                }
+            });
         }
         function createTable(){
             var tab = {{ note | raw }};
@@ -137,7 +180,7 @@
                     var callback;
                     if(item.deletedAt == null){
                         geocodePositionTab(new google.maps.LatLng(parseFloat(item.lat), parseFloat(item.long)), function (callback) {
-                            document.getElementById('tableNote').innerHTML += '<tr><td>' + item.desc + '</td><td>' + item.date + '</td><td>'
+                            document.getElementById('tableNote').innerHTML += '<tr id="memoId'+item.id+'"><td>' + item.desc + '</td><td>' + item.date + '</td><td>'
                                     + callback + '</td><td>'+'<input class="checkAjax" id="chkbx'+item.id+'" data-id="'+item.id
                                     +'" type="checkbox" onchange=checkBoxTrigger('+item.id+')>'+'</td><td>'+
                                     '<a href="javascript:deleteMemo('+item.id+')" class="btn btn-info btn-xs">Delete</a></td>'+'</tr>';
@@ -145,7 +188,7 @@
                     }
                     else{
                         geocodePositionTab(new google.maps.LatLng(parseFloat(item.lat), parseFloat(item.long)), function (callback) {
-                            document.getElementById('tableNote').innerHTML += '<tr><td>' + item.desc + '</td><td>' + item.date + '</td><td>'
+                            document.getElementById('tableNote').innerHTML += '<tr id="memoId'+item.id+'"><td>' + item.desc + '</td><td>' + item.date + '</td><td>'
                                     + callback + '</td><td>'+'<input class="checkAjax" id="chkbx'+item.id+'" data-id="'+item.id
                                     +'" type="checkbox" checked onchange=checkBoxTrigger('+item.id+')>'+'</td><td>'+
                                     '<a href="javascript:deleteMemo('+item.id+')" class="btn btn-info btn-xs">Delete</a></td>'+'</tr>';
