@@ -154,7 +154,6 @@ class DefaultController extends Controller
                 $tab[] = array('desc'=>$value->getTitle(),'date'=>date_format($value->getDatealarm(), 'Y-m-d H:i:s'),
                     'lat'=>$value->getLatitude(),'long'=>$value->getLongitude(), 'id'=>$value->getId(), 'deletedAt'=>$value->getDeletedAt());
             }
-
         }
         else { $empty = 1;}
         $note = json_encode($tab);
@@ -166,7 +165,6 @@ class DefaultController extends Controller
         $alarm = $em->getRepository("EPHECNoteBundle:Alarm")->find($idMemo);
         $alarm->setDeletedAt(new \DateTime('now'));
         $em->flush();
-
         $res = json_encode(array('res' => true));
         return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('res' => $res));
     }
@@ -175,7 +173,6 @@ class DefaultController extends Controller
         $alarm = $em->getRepository("EPHECNoteBundle:Alarm")->find($idMemo);
         $alarm->setDeletedAt(null);
         $em->flush();
-
         $res = json_encode(array('res' => true));
         return $this->render('EPHECNoteBundle:Default:ajax.html.twig', array('res' => $res));
     }
