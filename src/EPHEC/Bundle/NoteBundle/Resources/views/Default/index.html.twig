@@ -525,6 +525,12 @@
                     }
                 });
             }
+            else{
+                $("#validatorDiv").removeClass("has-error");
+                $("#validatorDiv").addClass("has-success");
+                $("#validator").removeClass();
+                $("#validator").addClass("glyphicon glyphicon-ok form-control-feedback");
+            }
         }
         $("#adressInput").on("change paste keyup",function(e){
             keyCount++;
