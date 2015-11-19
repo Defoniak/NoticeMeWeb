@@ -6,6 +6,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
+
                 </div>
                 <div class="modal-body" id="modal-body">
 
@@ -40,6 +41,14 @@
                             {{ form_errors(form.longitude) }}
                             <div class="col-lg-10">
                                 {{ form_widget(form.longitude, {'attr': {'class': 'form-control','readonly':'readonly'}}) }}
+                            </div>
+                        </div>
+                        <div id="validatorDiv" class="form-group has-success has-feedback">
+                                <label class="col-lg-2 control-label">Address</label>
+                            <div class="col-lg-10">
+                                <input list="addressChoice" type="text" class="form-control" id="adressInput">
+                                <datalist id="addressChoice"></datalist>
+                                <span id="validator"></span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -89,7 +98,6 @@
 
                 </div>
                 <div class="modal-body" id="modal-body">
-
                     <span id="modal-body-body">Memo added</span>
                 </div>
             </div>
@@ -98,36 +106,37 @@
     <!-- MODAL 3 -->
 
     <!-- FIN DE MODAL -->
-        <div><h3>Your memo</h3></div>
-        <div id ="emptyTable"></div>
-        <div id="memoArchived" class="alert alert-dismissable alert-success hidden center-block">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            Memo Archived
+    <div><h3>Your memo</h3></div>
+    <div id ="emptyTable"></div>
+    <div id="memoArchived" class="alert alert-dismissable alert-success hidden center-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        Memo Archived
+    </div>
+    <div id="map"></div>
+    <div id="noteTable" style = float:left;>
+        <div id="tabNote">
+            <table id="tableNote" class="table table-striped table-hover ">
+                <tr>
+                    <th></th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Address</th>
+                </tr>
+            </table>
         </div>
-        <div id="map"></div>
-        <div style = float:left;>
-            <div id="tabNote"><table id="tableNote" class="table table-striped table-hover ">
-                    <tr>
-                        <th></th>
-                        <th>Description</th>
-                        <th>Date</th>
-                        <th>Address</th>
-                    </tr>
-                </table> </div>
-            <div style="clear:left;"></div>
-            <div id="infoPanel">
-                <b>Estimated address:</b>
-                <div id="address"></div>
-            </div>
-            <div style="clear:left;"></div>
-            <button id ="createNote" data-toggle="modal" data-target="#complete-dialog" class="btn btn-fab btn-raised btn-material-red-500"><i class="mdi-image-edit"></i></button>
-        </div>
+    </div>
 </div>
+    <div id="infoPanel">
+        <b>Estimated address:</b>
+        <div id="address"></div>
+    </div>
+    <div style="clear:left;"></div>
+    <button id ="createNote" data-toggle="modal" data-target="#complete-dialog" class="btn btn-fab btn-raised btn-material-red-500"><i class="mdi-image-edit"></i></button>
 <div id="footer">
-        <div style="text-align: center;bottom: 0;" class="center-block">
-            <ul class="pagination" id="paginator">
-            </ul>
-        </div>
+    <div style="text-align: center;bottom: 0;" class="center-block">
+        <ul class="pagination" id="paginator">
+        </ul>
+    </div>
 </div>
     <style>
         h3{
@@ -138,18 +147,20 @@
             margin-bottom: 60px;
         }
         #map {
-            margin-left: 20px;
+            margin-left: 1em;
             width: 50%;
             height: 40em;
             float: left;
+            margin-top: 1em;
         }
         #infoPanel {
             text-align: center;
-            margin-left: 10px;
+            margin-left: 20px;
         }
         #tabNote {
 
-            margin-left: 10px;
+            margin-left: 1em;
+            margin-top: 1em;
         }
         #infoPanel div {
             margin-bottom: 5px;
@@ -223,6 +234,8 @@
         var bounds = new google.maps.LatLngBounds ();
         var personnalMarker;
         var counter=0;
+        var width, heigth;
+        var keyCount=0;
         function geocodePositionTab(pos,callback) {
             geocoder.geocode({
                 latLng: pos
@@ -250,6 +263,7 @@
         }
         //var map;
         function initialize() {
+            resize();
             var latLng = new google.maps.LatLng(50.8504500, 4.3487800);
             map = new google.maps.Map(document.getElementById('map'), {
                 center: latLng,
@@ -324,6 +338,23 @@
             var split2 = split[0].split("page/");
             document.location.href = split2[0]+'page/'+id;
         }
+
+        function resize(){
+            width = (document.body.clientWidth);
+            heigth = (document.body.clientHeight);
+            console.log("width = "+width);
+            if(width<1391){
+                document.getElementById("map").style.width="97.5%";
+                document.getElementById("noteTable").style.width="98.5%";
+            }
+            else{
+                document.getElementById("map").style.width="50%";
+                document.getElementById("noteTable").style.width="48%";
+            }
+        }
+        window.onresize = function(event) {
+            resize();
+        };
         function showNote() {
             var tab = {{ note | raw }};
             var empty = {{ empty }};
@@ -387,6 +418,9 @@
             //$('#modal-body-body').empty().append('Lat = '+ personnalMarker.getPosition().lat()+' Long ='+personnalMarker.getPosition().lng());
             $('#form_latitude').empty().val(personnalMarker.getPosition().lat());
             $('#form_longitude').empty().val(personnalMarker.getPosition().lng());
+            $('#adressInput').empty().val($('#address').text());
+            findByAddress();
+
         });
         $(function () {
             $('#form_datealarm').datetimepicker({locale:"fr",showTodayButton: true,
@@ -453,6 +487,61 @@
             if(val == 1){
                 $('#memoArchived').removeClass('hidden');
             }
+        });
+
+        function findByAddress(val){
+            var adresse = document.getElementById('adressInput').value;
+            if(adresse != "Cannot determine address at this location."){
+                geocoder.geocode( { 'address': adresse}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        if(val=="out"){
+                            map.setCenter(results[0].geometry.location);
+                            personnalMarker.setPosition(results[0].geometry.location);
+                        }
+                        //document.getElementById("button_signaler").disabled = false;
+                        var formatted_address=results[0].formatted_address;
+                        var latitude=results[0].geometry.location.lat();
+                        var longitude=results[0].geometry.location.lng();
+                        $('#form_latitude').empty().val(latitude);
+                        $('#form_longitude').empty().val(longitude);
+                        //$('#addressChoice').empty();
+                        /*$.each(results, function(i,val){
+                         document.getElementById('addressChoice').innerHTML +='<option value="'+val+'">';
+                         console.log("test");
+                         });*/
+                        // Création du marqueur du lieu (épingle)
+                        $("#validator").removeClass();
+                        $("#validator").addClass("glyphicon glyphicon-ok form-control-feedback");
+                        $("#validatorDiv").removeClass("has-error");
+                        $("#validatorDiv").addClass("has-success");
+                        document.getElementById("form_save").disabled = false;
+                    } else {
+                        //document.getElementById("button_signaler").disabled = true;
+                        $("#validator").removeClass();
+                        $("#validator").addClass("glyphicon glyphicon-remove form-control-feedback");
+                        $("#validatorDiv").removeClass("has-success");
+                        $("#validatorDiv").addClass("has-error");
+                        document.getElementById("form_save").disabled = true;
+                    }
+                });
+            }
+            else{
+                $("#validatorDiv").removeClass("has-error");
+                $("#validatorDiv").addClass("has-success");
+                $("#validator").removeClass();
+                $("#validator").addClass("glyphicon glyphicon-ok form-control-feedback");
+            }
+        }
+        $("#adressInput").on("change paste keyup",function(e){
+            keyCount++;
+            if(keyCount > 5){
+                keyCount=0;
+                findByAddress("in");
+            }
+
+        });
+        $("#adressInput").focusout(function(){
+            findByAddress("out");
         });
 
     </script>
