@@ -21,3 +21,11 @@ ephec_android_getuser:
 ephec_android_edituser:
     path: /android/edituser
     defaults: { _controller: EPHECMainBundle:Default:androidedituser}
+
+ephec_android_editMemo:
+    path: /android/editmemo
+    defaults: { _controller: EPHECMainBundle:Default:androideditmemo}
+
+ephec_android_removeMemo:
+    path: /android/removememo
+    defaults: { _controller: EPHECMainBundle:Default:androidRemoveMemo}
