@@ -6,6 +6,26 @@ ephec_android_login:
     path: /android/login
     defaults: { _controller: EPHECMainBundle:Default:androidlogin}
 
-ephec_android_register:
-    path: /android/register
-    defaults: { _controller: EPHECMainBundle:Default:androidregister}
+ephec_android_memolist:
+    path: /android/memolist
+    defaults: { _controller: EPHECMainBundle:Default:androidmemolist}
+
+ephec_android_memolist:
+    path: /android/memolist
+    defaults: { _controller: EPHECMainBundle:Default:androidmemolist}
+
+ephec_android_getuser:
+    path: /android/getuser
+    defaults: { _controller: EPHECMainBundle:Default:androidgetuser}
+
+ephec_android_edituser:
+    path: /android/edituser
+    defaults: { _controller: EPHECMainBundle:Default:androidedituser}
+
+ephec_android_editMemo:
+    path: /android/editmemo
+    defaults: { _controller: EPHECMainBundle:Default:androideditmemo}
+
+ephec_android_removeMemo:
+    path: /android/removememo
+    defaults: { _controller: EPHECMainBundle:Default:androidRemoveMemo}
