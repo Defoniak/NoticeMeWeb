@@ -8,16 +8,22 @@
     {% block stylesheets %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.min.css">
+        <link rel="stylesheet" href="{{ asset('bundles/EPHEC/css/bootstrap.min.css') }}"/>
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
+        <link rel="stylesheet" href="{{ asset('bundles/EPHEC/css/material-fullpalette.min.css') }}"/>
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.min.css">-->
+        <link rel="stylesheet" href="{{ asset('bundles/EPHEC/css/ripples.min.css') }}"/>
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.min.css">-->
+        {#<link rel="stylesheet" href="{{ asset('bundles/EPHEC/css/roboto.min.css') }}"/>#}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/roboto.min.css">
         <!-- Dropdown.js -->
-        <link href="//cdn.rawgit.com/FezVrasta/dropdown.js/master/jquery.dropdown.css" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('bundles/EPHEC/css/jquery.dropdown.css') }}"/>
+        <!--<link href="//cdn.rawgit.com/FezVrasta/dropdown.js/master/jquery.dropdown.css" rel="stylesheet">-->
         <link rel="stylesheet" href="{{ asset('bundles/EPHEC/css/styles3.css') }}" type="text/css" />
 
         <!-- jQuery -->
-        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="{{ asset('bundles/EPHEC/js/jquery-1.10.2.min.js') }}"></script>
+        <!--<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>-->
         <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">-->
     {% endblock %}
     {% block scriptgmap %}{% endblock %}
@@ -80,10 +86,14 @@
 
 {% endblock %}
 {% block javascripts %}
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>
-    <script src="https://cdn.rawgit.com/FezVrasta/dropdown.js/master/jquery.dropdown.js"></script>
+    <script src="{{ asset('bundles/EPHEC/js/bootstrap.min.js') }}"></script>
+    {#<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>#}
+    <script src="{{ asset('bundles/EPHEC/js/material.min.js') }}"></script>
+    {#<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script>#}
+    <script src="{{ asset('bundles/EPHEC/js/ripples.min.js') }}"></script>
+    {#<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>#}
+    <script src="{{ asset('bundles/EPHEC/js/jquery.dropdown.js') }}"></script>
+    {#<script src="https://cdn.rawgit.com/FezVrasta/dropdown.js/master/jquery.dropdown.js"></script>#}
 {% endblock %}
 </body>
 </html>
