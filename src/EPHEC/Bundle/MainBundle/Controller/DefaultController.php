@@ -48,10 +48,11 @@ class DefaultController extends Controller
         $userManager = $this->get('fos_user.user_manager');
 
         $user = $userManager->findUserByEmail($mail);
+        if(is_null($user)) return $this->render('EPHECMainBundle:Default:androidlogin.html.twig', array("value"=>-1));
         $em = $this->getDoctrine()->getManager();
 
         $bool = $this->checkUser($user,$password);
-        if($bool === 0) return $this->render('EPHECMainBundle:Default:androidlogin.html.twig', array("value"=>0));
+        if($bool === 0) return $this->render('EPHECMainBundle:Default:androidlogin.html.twig', array("value"=>-2));
 
         $groups = $user->getGroup();
         $alarms = array();
@@ -89,6 +90,7 @@ class DefaultController extends Controller
         $userManager = $this->get('fos_user.user_manager');
 
         $user = $userManager->findUserByEmail($mail);
+        if(is_null($user)) return $this->render('EPHECMainBundle:Default:androidlogin.html.twig', array("value"=>0));
 
         $bool = $this->checkUser($user,$password);
         if($bool === 0) return $this->render('EPHECMainBundle:Default:androidlogin.html.twig', array("value"=>0));
@@ -108,6 +110,7 @@ class DefaultController extends Controller
 
         $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->findUserByEmail($mail);
+        if(is_null($user)) return $this->render('EPHECMainBundle:Default:androidlogin.html.twig', array("value"=>0));
         $bool = $this->checkUser($user,$password);
         if($bool === 0) return $this->render('EPHECMainBundle:Default:androidlogin.html.twig', array("value"=>0));
 
@@ -138,6 +141,7 @@ class DefaultController extends Controller
 
         $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->findUserByEmail($mail);
+        if(is_null($user)) return $this->render('EPHECMainBundle:Default:androidlogin.html.twig', array("value"=>0));
         $bool = $this->checkUser($user,$password);
         if($bool === 0) return $this->render('EPHECMainBundle:Default:androidlogin.html.twig', array("value"=>0));
 
@@ -190,6 +194,7 @@ class DefaultController extends Controller
 
         $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->findUserByEmail($mail);
+        if(is_null($user)) return $this->render('EPHECMainBundle:Default:androidlogin.html.twig', array("value"=>0));
         $bool = $this->checkUser($user,$password);
         if($bool === 0) return $this->render('EPHECMainBundle:Default:androidlogin.html.twig', array("value"=>0));
 
