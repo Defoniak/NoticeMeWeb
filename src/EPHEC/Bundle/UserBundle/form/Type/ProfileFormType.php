@@ -17,29 +17,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
-use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
-
-class ProfileFormType extends BaseType
+class ProfileFormType extends AbstractType
 {
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('firstname')->add('lastname');
+    }
+
+    public function getParent()
+    {
+        return 'fos_user_profile';
+    }
 
     public function getName()
     {
         return 'app_user_profile';
-    }
-
-    /**
-     * Builds the embedded form representing the user.
-     *
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
-    protected function buildUserForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))
-            ->add('email', 'email', array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
-            ->add('firstname')
-            ->add('lastname')
-        ;
     }
 }
