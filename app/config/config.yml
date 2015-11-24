@@ -93,4 +93,4 @@ fos_user:
                 enabled: false
     profile:
             form:
-                type: app.form.profile
+                type: app_user_profile
