@@ -39,7 +39,7 @@ class ProfileFormType extends BaseType
             ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))
             ->add('email', 'email', array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
             ->add('firstname')
-            ->ADD('lastname')
+            ->add('lastname')
         ;
     }
 }
