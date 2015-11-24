@@ -1,0 +1,49 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+    <fieldset>
+        {#<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />#}
+
+        <div class="form-group">
+            <label for="fos_user_profile_form_username" class="col-lg-2 control-label">{{ 'profile.show.username'|trans }}</label>
+            <div class="col-lg-10">
+                <input type="text" id="fos_user_profile_form_username" value="{{ user.username }}" class="form-control" name="fos_user_profile_form[username]" required="required">
+                <span class="help-inline">{{ form_errors(form.username) }}</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="fos_user_profile_form_email" class="col-lg-2 control-label">{{ 'profile.show.email'|trans }}</label>
+            <div class="col-lg-10">
+                <input type="text" id="fos_user_profile_form_email" value="{{ user.email }}" class="form-control" name="fos_user_profile_form[email]" required="required">
+                <span class="help-inline">{{ form_errors(form.email) }}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="fos_user_profile_lastname" class="col-lg-2 control-label">Lastname</label>
+            <div class="col-lg-10">
+                <input type="text" id="fos_user_profile_latsname" class="form-control" name="fos_user_profile_form[lastname]" value="{{ user.lastname }}" required="required">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="fos_user_profile_firstname" class="col-lg-2 control-label">FirstName</label>
+            <div class="col-lg-10">
+                <input type="text" id="fos_user_profile_firstname" class="form-control" name="fos_user_profile_form[firstname]" value="{{ user.firstname }}" required="required">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="fos_user_profile_current_password" class="col-lg-2 control-label">Current password</label>
+            <div class="col-lg-10">
+                <input type="password" id="fos_user_profile_current_password" class="form-control" name="fos_user_profile_form[current_password]" required="required">
+                {{ form_errors(form.current_password) }}
+            </div>
+        </div>
+        {{ form_errors(form) }}
+        {{ form_row(form._token) }}
+    </fieldset>
+    <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+            <input type="submit" class="btn btn-primary" id="_submit" name="_submit" value="{{ 'profile.edit.submit'|trans }}" />
+        </div>
+    </div>
+</form>
