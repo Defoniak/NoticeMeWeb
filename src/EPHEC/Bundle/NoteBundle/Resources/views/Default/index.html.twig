@@ -47,7 +47,6 @@
                                 <label class="col-lg-2 control-label">Address</label>
                             <div class="col-lg-10">
                                 <input list="addressChoice" type="text" class="form-control" id="adressInput">
-                                <datalist id="addressChoice"></datalist>
                                 <span id="validator"></span>
                             </div>
                         </div>
@@ -223,8 +222,8 @@
     </style>
     <link rel="stylesheet" href="{{ asset('bundles/EPHEC/css/bootstrap-datetimepicker.min.css') }}">
     {#<link rel="stylesheet" href="//www.bruminator.eu/includes/css/bootstrap-datetimepicker.min.css">#}
-    <script src="{{ asset('bundles/EPHEC/js/gmap.js') }}"></script>
-    {#<script src="https://maps.googleapis.com/maps/api/js"></script>#}
+    {#<script src="{{ asset('bundles/EPHEC/js/gmap.js') }}"></script>#}
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script src="{{ asset('bundles/EPHEC/js/moment-with-locales.min.js') }}"></script>
     {#<script src="//www.bruminator.eu/includes/js/moment-with-locales.min.js"></script>#}
     <script src="{{ asset('bundles/EPHEC/js/bootstrap-datetimepicker.min.js') }}"></script>
@@ -325,8 +324,9 @@
             showNote();
             map.fitBounds(bounds);
             map.setCenter(bounds.getCenter());
-            createTable();
+
             createPagination();
+            createTable();
 
         }
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -438,8 +438,10 @@
                 e.preventDefault();
                 document.getElementById('spinner').style.display='block';
                 $form =$(this);
+                var split = window.location.href.split("archived/");
+                var split2 = split[0].split("page/");
                 var that = $(this),
-                        url = (that.attr('action')+"add"),
+                        url = (split2[0]+"add"),
                         method = that.attr('method'),
                         data = {};
                 console.log(method);
@@ -465,11 +467,11 @@
                             setTimeout(function() {$('#memoAdded').modal('hide');}, 2500);
                             $("#addMemoFrom")[0].reset();
                             geocodePositionTab(new google.maps.LatLng(data["form[latitude]"],data["form[longitude]"]),function(callback){
-                                var split = window.location.href.split("/archived/");
+                                var split = window.location.href.split("archived/");
                                 var split2 = split[0].split("page/");
                                 document.getElementById('tableNote').innerHTML +=
                                         '<tr style="cursor:pointer" onclick=window.location.href="'
-                                        +split2[0]+'/edit/'+response["id"]+'">' +'<td><img src="http://www.google.com/mapfiles/marker'+montableau[counter]+'.png"/></td>' +
+                                        +split2[0]+'edit/'+response["id"]+'">' +'<td><img src="http://www.google.com/mapfiles/marker'+montableau[counter]+'.png"/></td>' +
                                     '<td>'+data["form[title]"]+'</td><td>'+data["form[datealarm]"]+'</td><td>'+ callback +'</td></tr>';
                                 var marker = new google.maps.Marker({
                                     position: {lat: parseFloat(data["form[latitude]"]), lng: parseFloat(data["form[longitude]"]) },

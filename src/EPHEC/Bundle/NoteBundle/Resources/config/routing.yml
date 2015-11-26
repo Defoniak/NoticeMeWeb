@@ -4,6 +4,9 @@ ephec_note_homepage:
 ephec_note_addMemo:
     path:     /add
     defaults: { _controller: EPHECNoteBundle:Default:addMemo }
+ephec_note_addMemoPage:
+    path:     /page/add
+    defaults: { _controller: EPHECNoteBundle:Default:addMemo }
 ephec_note_editMemo:
     path:     /edit/{idMemo}
     defaults: { _controller: EPHECNoteBundle:Default:editMemo }

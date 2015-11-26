@@ -20,3 +20,13 @@
 .ne:hover{
     border-bottom: solid green 2px;
 }*/
+body, body.modal {
+    padding-right: 0 !important;
+}
+
+body.modal {
+    overflow-y: hidden;
+}
+.modal-open, .modal-open .navbar-fixed-top {
+    padding-right: 0 !important;
+}
