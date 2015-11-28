@@ -46,11 +46,9 @@
     <!---FIN MODAL -->
     {{ form_start(form, {'attr': {'class': 'form-horizontal','id':'addMemoFrom'}}) }}
     {{ form_errors(form) }}
-    <fieldset>
-        <legend>Edit a mémo</legend>
+    <fieldset style="padding-right:3em">
+        <legend>Edit a memo</legend>
         <div id ="form-feedback" class="form-feedback"></div>
-
-
         <div class="form-group">
             {{ form_label(form.datealarm, "Date", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
             {{ form_errors(form.datealarm) }}
@@ -75,6 +73,14 @@
             {{ form_errors(form.longitude) }}
             <div class="col-lg-10">
                 {{ form_widget(form.longitude, {'attr': {'class': 'form-control','readonly':'readonly'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.address, "Address", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+            {{ form_errors(form.address) }}
+            <div class="col-lg-10">
+                {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
+                <span id="validator"></span>
             </div>
         </div>
         <div class="form-group">
@@ -132,6 +138,7 @@
         var geocoder = new google.maps.Geocoder();
         var map;
         var personnalMarker;
+        var keyCount=0;
         function geocodePositionTab(pos,callback) {
             geocoder.geocode({
                 latLng: pos
@@ -168,31 +175,6 @@
             });
             map.setCenter(latLng);
             geocodePosition(map.getCenter());
-            /*var infoWindow = new google.maps.InfoWindow({map: map});
-            // Try HTML5 geolocation.
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    var pos = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
-                    infoWindow.setPosition(pos);
-                    map.setCenter(pos);
-                    personnalMarker.setPosition(pos);
-                    personnalMarker.setVisible(true);
-                    //updateMarkerPosition(map.getCenter());
-                    geocodePosition(map.getCenter());
-                }, function() {
-                    handleLocationError(true, infoWindow, map.getCenter());
-                });
-            } else {
-                // Browser doesn't support Geolocation
-                handleLocationError(false, infoWindow, map.getCenter());
-
-                updateMarkerPosition(map.getCenter());
-                personnalMarker.setVisible(true);
-                geocodePosition(map.getCenter());
-            }*/
             personnalMarker = new google.maps.Marker({
                 position: {lat: lat, lng: long},
                 map: map,
@@ -243,6 +225,14 @@
             e.preventDefault();
             $('#form_latitude').empty().val(personnalMarker.getPosition().lat());
             $('#form_longitude').empty().val(personnalMarker.getPosition().lng());
+            geocodePositionTab(personnalMarker.getPosition(), function (callback) {
+                $('#form_address').empty().val(callback);
+                $("#validator").removeClass();
+                $("#validator").addClass("glyphicon glyphicon-ok form-control-feedback");
+                $("#validatorDiv").removeClass("has-error");
+                $("#validatorDiv").addClass("has-success");
+                document.getElementById("form_save").disabled = false;
+             });
             $('#complete-dialog').modal('hide');
         });
         $('#archive-checkbox').on('change',function(){
@@ -268,6 +258,53 @@
                     }
                 }
             });
+        });
+        function findByAddress(val){
+            var adresse = document.getElementById('form_address').value;
+            if(adresse != "Cannot determine address at this location."){
+                geocoder.geocode( { 'address': adresse}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        if(val=="out"){
+                            map.setCenter(results[0].geometry.location);
+                            personnalMarker.setPosition(results[0].geometry.location);
+                        }
+                        //document.getElementById("button_signaler").disabled = false;
+                        var formatted_address=results[0].formatted_address;
+                        var latitude=results[0].geometry.location.lat();
+                        var longitude=results[0].geometry.location.lng();
+                        $('#form_latitude').empty().val(latitude);
+                        $('#form_longitude').empty().val(longitude);
+                        $("#validator").removeClass();
+                        $("#validator").addClass("glyphicon glyphicon-ok form-control-feedback");
+                        $("#validatorDiv").removeClass("has-error");
+                        $("#validatorDiv").addClass("has-success");
+                        document.getElementById("form_save").disabled = false;
+                    } else {
+                        $("#validator").removeClass();
+                        $("#validator").addClass("glyphicon glyphicon-remove form-control-feedback");
+                        $("#validatorDiv").removeClass("has-success");
+                        $("#validatorDiv").addClass("has-error");
+                        document.getElementById("form_save").disabled = true;
+                    }
+                });
+            }
+            else{
+                $("#validatorDiv").removeClass("has-error");
+                $("#validatorDiv").addClass("has-success");
+                $("#validator").removeClass();
+                $("#validator").addClass("glyphicon glyphicon-ok form-control-feedback");
+            }
+        }
+        $("#form_address").on("change paste keyup",function(e){
+            keyCount++;
+            if(keyCount > 5){
+                keyCount=0;
+                findByAddress("in");
+            }
+
+        });
+        $("#form_address").focusout(function(){
+            findByAddress("out");
         });
     </script>
 {% endblock %}

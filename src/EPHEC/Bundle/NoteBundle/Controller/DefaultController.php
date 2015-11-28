@@ -35,7 +35,8 @@ class DefaultController extends Controller
             $empty = 0;
             foreach($alarms[0] as $value){
                 $tab2[] = array('desc'=>$value->getTitle(),'date'=>date_format($value->getDatealarm(), 'Y-m-d H:i:s'),
-                    'lat'=>$value->getLatitude(),'long'=>$value->getLongitude(), 'id'=>$value->getId());
+                    'lat'=>$value->getLatitude(),'long'=>$value->getLongitude(),'address'=>$value->getAddress(), 'id'=>$value->getId());
+                // ajout address
             }
 
         }
@@ -52,6 +53,7 @@ class DefaultController extends Controller
             ])
             ->add('latitude', 'text')
             ->add('longitude', 'text')
+            ->add('address', 'text') // ajout address
             ->add('title', 'text')
             ->add('memo', 'textarea')
             ->add('save', 'submit');
@@ -74,6 +76,7 @@ class DefaultController extends Controller
                 $alarm->setLongitude($_POST['form']['longitude']);
                 $alarm->setTitle($_POST['form']['title']);
                 $alarm->setMemo($_POST['form']['memo']);
+                $alarm->setAddress($_POST['form']['address']); // ajout address
                 $em->persist($alarm);
                 $em->flush();
                 $id=$alarm->getId();
@@ -106,6 +109,7 @@ class DefaultController extends Controller
             ])
             ->add('latitude', 'text')
             ->add('longitude', 'text')
+            ->add('address','text') // ajout address
             ->add('title', 'text')
             ->add('memo', 'textarea')
             ->add('save', 'submit');
@@ -119,6 +123,7 @@ class DefaultController extends Controller
             $alarm->setLongitude($_POST['form']['longitude']);
             $alarm->setTitle($_POST['form']['title']);
             $alarm->setMemo($_POST['form']['memo']);
+            $alarm->setAddress($_POST['form']['address']); // ajout address
             $em->flush();
 
             return $this->redirect($this->generateUrl('ephec_note_homepage'));
@@ -152,7 +157,8 @@ class DefaultController extends Controller
             $empty = 0;
             foreach($alarms[0] as $value){
                 $tab[] = array('desc'=>$value->getTitle(),'date'=>date_format($value->getDatealarm(), 'Y-m-d H:i:s'),
-                    'lat'=>$value->getLatitude(),'long'=>$value->getLongitude(), 'id'=>$value->getId(), 'deletedAt'=>$value->getDeletedAt());
+                    'lat'=>$value->getLatitude(),'long'=>$value->getLongitude(), 'id'=>$value->getId(), 'deletedAt'=>$value->getDeletedAt(),
+                    'address'=>$value->getAddress()); //ajout address
             }
         }
         else { $empty = 1;}

@@ -44,9 +44,11 @@
                             </div>
                         </div>
                         <div id="validatorDiv" class="form-group has-success has-feedback">
-                                <label class="col-lg-2 control-label">Address</label>
+                                {{ form_label(form.address, "Address", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+                                {{ form_errors(form.address) }}
                             <div class="col-lg-10">
-                                <input list="addressChoice" type="text" class="form-control" id="adressInput">
+                                {#<input list="addressChoice" type="text" class="form-control" id="adressInput">#}
+                                {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
                                 <span id="validator"></span>
                             </div>
                         </div>
@@ -404,12 +406,16 @@
                     var callback;
                     var split = window.location.href.split("archived/");
                     var split2 = split[0].split("page/");
-                    geocodePositionTab(new google.maps.LatLng(parseFloat(item.lat), parseFloat(item.long)), function (callback) {
+                    /*geocodePositionTab(new google.maps.LatLng(parseFloat(item.lat), parseFloat(item.long)), function (callback) {
                         document.getElementById('tableNote').innerHTML += '<tr style="cursor:pointer" onclick=window.location.href="'
                                 +split2[0]+'edit/'+item.id+'">' + '<td><img src="http://www.google.com/mapfiles/marker'
                                 + montableau[i] + '.png"/></td><td>' + item.desc + '</td><td>' + item.date + '</td><td>'
                                 + callback + '</td></tr>';
-                    });
+                    });*/
+                    document.getElementById('tableNote').innerHTML += '<tr style="cursor:pointer" onclick=window.location.href="'
+                            +split2[0]+'edit/'+item.id+'">' + '<td><img src="http://www.google.com/mapfiles/marker'
+                            + montableau[i] + '.png"/></td><td>' + item.desc + '</td><td>' + item.date + '</td><td>'
+                            + item.address + '</td></tr>';
                 });
             }
             else {document.getElementById('emptyTable').innerHTML = "<div class='alert alert-dismissable alert-warning center-block'>" +
@@ -422,7 +428,7 @@
             //$('#modal-body-body').empty().append('Lat = '+ personnalMarker.getPosition().lat()+' Long ='+personnalMarker.getPosition().lng());
             $('#form_latitude').empty().val(personnalMarker.getPosition().lat());
             $('#form_longitude').empty().val(personnalMarker.getPosition().lng());
-            $('#adressInput').empty().val($('#address').text());
+            $('#form_address').empty().val($('#address').text());
             findByAddress();
 
         });
@@ -466,7 +472,7 @@
                             console.log(response["id"]);
                             setTimeout(function() {$('#memoAdded').modal('hide');}, 2500);
                             $("#addMemoFrom")[0].reset();
-                            geocodePositionTab(new google.maps.LatLng(data["form[latitude]"],data["form[longitude]"]),function(callback){
+                            /*geocodePositionTab(new google.maps.LatLng(data["form[latitude]"],data["form[longitude]"]),function(callback){
                                 var split = window.location.href.split("archived/");
                                 var split2 = split[0].split("page/");
                                 document.getElementById('tableNote').innerHTML +=
@@ -482,7 +488,22 @@
                                     title: data["form[title]"]
                                 });
                                 counter++;
+                            });*/
+                            var split = window.location.href.split("archived/");
+                            var split2 = split[0].split("page/");
+                            document.getElementById('tableNote').innerHTML +=
+                                    '<tr style="cursor:pointer" onclick=window.location.href="'
+                                    +split2[0]+'edit/'+response["id"]+'">' +'<td><img src="http://www.google.com/mapfiles/marker'+montableau[counter]+'.png"/></td>' +
+                                    '<td>'+data["form[title]"]+'</td><td>'+data["form[datealarm]"]+'</td><td>'+ data["form[address]"] +'</td></tr>';
+                            var marker = new google.maps.Marker({
+                                position: {lat: parseFloat(data["form[latitude]"]), lng: parseFloat(data["form[longitude]"]) },
+                                map: map,
+                                animation: google.maps.Animation.DROP,
+                                icon:'http://www.google.com/mapfiles/marker'+montableau[counter]+'.png',
+                                //icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                                title: data["form[title]"]
                             });
+                            counter++;
                         }
                     }
                 });
@@ -496,7 +517,7 @@
         });
 
         function findByAddress(val){
-            var adresse = document.getElementById('adressInput').value;
+            var adresse = document.getElementById('form_address').value;
             if(adresse != "Cannot determine address at this location."){
                 geocoder.geocode( { 'address': adresse}, function(results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
@@ -538,7 +559,7 @@
                 $("#validator").addClass("glyphicon glyphicon-ok form-control-feedback");
             }
         }
-        $("#adressInput").on("change paste keyup",function(e){
+        $("#form_address").on("change paste keyup",function(e){
             keyCount++;
             if(keyCount > 5){
                 keyCount=0;
@@ -546,7 +567,7 @@
             }
 
         });
-        $("#adressInput").focusout(function(){
+        $("#form_address").focusout(function(){
             findByAddress("out");
         });
 

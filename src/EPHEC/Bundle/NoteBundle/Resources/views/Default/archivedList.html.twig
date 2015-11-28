@@ -181,20 +181,28 @@
                 $.each(tab, function (i, item) {
                     var callback;
                     if(item.deletedAt == null){
-                        geocodePositionTab(new google.maps.LatLng(parseFloat(item.lat), parseFloat(item.long)), function (callback) {
+                        /*geocodePositionTab(new google.maps.LatLng(parseFloat(item.lat), parseFloat(item.long)), function (callback) {
                             document.getElementById('tableNote').innerHTML += '<tr id="memoId'+item.id+'"><td>' + item.desc + '</td><td>' + item.date + '</td><td>'
                                     + callback + '</td><td>'+'<input class="checkAjax" id="chkbx'+item.id+'" data-id="'+item.id
                                     +'" type="checkbox" onchange=checkBoxTrigger('+item.id+')>'+'</td><td>'+
                                     '<a href="javascript:deleteMemo('+item.id+')" class="btn btn-info btn-xs">Delete</a></td>'+'</tr>';
-                        });
+                        });*/
+                        document.getElementById('tableNote').innerHTML += '<tr id="memoId'+item.id+'"><td>' + item.desc + '</td><td>' + item.date + '</td><td>'
+                                + item.address + '</td><td>'+'<input class="checkAjax" id="chkbx'+item.id+'" data-id="'+item.id
+                                +'" type="checkbox" onchange=checkBoxTrigger('+item.id+')>'+'</td><td>'+
+                                '<a href="javascript:deleteMemo('+item.id+')" class="btn btn-info btn-xs">Delete</a></td>'+'</tr>';
                     }
                     else{
-                        geocodePositionTab(new google.maps.LatLng(parseFloat(item.lat), parseFloat(item.long)), function (callback) {
+                        /*geocodePositionTab(new google.maps.LatLng(parseFloat(item.lat), parseFloat(item.long)), function (callback) {
                             document.getElementById('tableNote').innerHTML += '<tr id="memoId'+item.id+'"><td>' + item.desc + '</td><td>' + item.date + '</td><td>'
                                     + callback + '</td><td>'+'<input class="checkAjax" id="chkbx'+item.id+'" data-id="'+item.id
                                     +'" type="checkbox" checked onchange=checkBoxTrigger('+item.id+')>'+'</td><td>'+
                                     '<a href="javascript:deleteMemo('+item.id+')" class="btn btn-info btn-xs">Delete</a></td>'+'</tr>';
-                        });
+                        });*/
+                        document.getElementById('tableNote').innerHTML += '<tr id="memoId'+item.id+'"><td>' + item.desc + '</td><td>' + item.date + '</td><td>'
+                                + item.address + '</td><td>'+'<input class="checkAjax" id="chkbx'+item.id+'" data-id="'+item.id
+                                +'" type="checkbox" checked onchange=checkBoxTrigger('+item.id+')>'+'</td><td>'+
+                                '<a href="javascript:deleteMemo('+item.id+')" class="btn btn-info btn-xs">Delete</a></td>'+'</tr>';
                     }
 
                 });

@@ -13,6 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
 class Alarm
 {
     /**
+     * @ORM\Column(name="address", type="text", length=255, nullable=true)
+     */
+    private $address;
+    /**
      *
      * @ORM\Column(name="dateAlarm", type="datetime", nullable=true)
      */
@@ -71,6 +75,22 @@ class Alarm
     public function __construct(){
         $this->setDatevalid((new \DateTime('now')));
         //$this->setDatevalid("27-10-2015 18:15");
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
     }
 
     /**
