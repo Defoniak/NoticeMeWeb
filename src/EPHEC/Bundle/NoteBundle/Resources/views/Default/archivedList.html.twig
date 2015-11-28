@@ -74,27 +74,9 @@
             </ul>
         </div>
     </div>
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script>
-        var geocoder = new google.maps.Geocoder();
         createTable();
         createPagination();
-        /*$(document).ready(function(){
-            $("input[type='checkbox']").on('change', function(){
-                console.log("juju suce des bites");
-            });
-        })*/
-        function geocodePositionTab(pos,callback) {
-            geocoder.geocode({
-                latLng: pos
-            }, function(responses) {
-                if (responses && responses.length > 0) {
-                    callback(responses[0].formatted_address);
-                } else {
-                    callback('Cannot determine address at this location.');
-                }
-            })
-        }
         function createPagination(){
             var page = {{ page }};
             var currentPage = {{ currentPage }};
