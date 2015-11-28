@@ -162,6 +162,15 @@
 
             margin-left: 1em;
             margin-top: 1em;
+            max-height: 40em;
+
+        }
+        #tabNote td{
+            white-space: nowrap;
+
+        }
+        #noteTable{
+
         }
         #infoPanel div {
             margin-bottom: 5px;
@@ -239,6 +248,7 @@
         var bounds = new google.maps.LatLngBounds ();
         var personnalMarker;
         var counter=0;
+        var countElts = {{ count }};
         var width, heigth;
         var keyCount=0;
         function geocodePositionTab(pos,callback) {
@@ -253,6 +263,7 @@
             });
         }
         function geocodePosition(pos) {
+            console.log({{ count }});
             geocoder.geocode({
                 latLng: pos
             }, function(responses) {
@@ -466,6 +477,7 @@
                     success: function(response){
                         if (response["res"]==true){
                             console.log('ok');
+                            countElts++;
                             document.getElementById('spinner').style.display='none';
                             $('#complete-dialog').modal('hide');
                             $('#memoAdded').modal('show');
@@ -489,21 +501,29 @@
                                 });
                                 counter++;
                             });*/
-                            var split = window.location.href.split("archived/");
-                            var split2 = split[0].split("page/");
-                            document.getElementById('tableNote').innerHTML +=
-                                    '<tr style="cursor:pointer" onclick=window.location.href="'
-                                    +split2[0]+'edit/'+response["id"]+'">' +'<td><img src="http://www.google.com/mapfiles/marker'+montableau[counter]+'.png"/></td>' +
-                                    '<td>'+data["form[title]"]+'</td><td>'+data["form[datealarm]"]+'</td><td>'+ data["form[address]"] +'</td></tr>';
-                            var marker = new google.maps.Marker({
-                                position: {lat: parseFloat(data["form[latitude]"]), lng: parseFloat(data["form[longitude]"]) },
-                                map: map,
-                                animation: google.maps.Animation.DROP,
-                                icon:'http://www.google.com/mapfiles/marker'+montableau[counter]+'.png',
-                                //icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-                                title: data["form[title]"]
-                            });
-                            counter++;
+                            var page = {{ page }}; var currentPage = {{ currentPage }};
+
+                            if(currentPage > page){
+                                var split = window.location.href.split("archived/");
+                                var split2 = split[0].split("page/");
+                                document.getElementById('tableNote').innerHTML +=
+                                        '<tr style="cursor:pointer" onclick=window.location.href="'
+                                        +split2[0]+'edit/'+response["id"]+'">' +'<td><img src="http://www.google.com/mapfiles/marker'+montableau[counter]+'.png"/></td>' +
+                                        '<td>'+data["form[title]"]+'</td><td>'+data["form[datealarm]"]+'</td><td>'+ data["form[address]"] +'</td></tr>';
+                                var marker = new google.maps.Marker({
+                                    position: {lat: parseFloat(data["form[latitude]"]), lng: parseFloat(data["form[longitude]"]) },
+                                    map: map,
+                                    animation: google.maps.Animation.DROP,
+                                    icon:'http://www.google.com/mapfiles/marker'+montableau[counter]+'.png',
+                                    //icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                                    title: data["form[title]"]
+                                });
+                                counter++;
+                            }
+                            else if(((countElts)/10) > page){
+                                var mypage =(page+1);
+                                document.getElementById('paginator').innerHTML +='<li><a href="javascript:createLink('+mypage+')">'+mypage+'</a></li>';
+                            }
                         }
                     }
                 });

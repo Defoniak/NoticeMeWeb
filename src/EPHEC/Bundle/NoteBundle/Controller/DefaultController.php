@@ -60,7 +60,7 @@ class DefaultController extends Controller
         $form = $formBuilder->getForm();
         //fin ajout form
         return $this->render('EPHECNoteBundle:Default:index.html.twig', array('note' => $note, 'form' => $form->createView(),
-            'empty' => $empty, 'val' => $val, 'page' => $page, 'currentPage' => $currentPage));
+            'empty' => $empty, 'val' => $val, 'page' => $page, 'currentPage' => $currentPage, 'count' => $count));
     }
     public function addMemoAction(){
         if ($this->get('request')->getMethod() == 'POST') {
