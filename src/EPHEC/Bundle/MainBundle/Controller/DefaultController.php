@@ -97,7 +97,7 @@ class DefaultController extends Controller
 
         $tab = array("firstname" => $user->getFirstname(), "lastname" => $user->getLastname());
 
-        $value = json_encode($tab);
+        $value = json_encode(array("json" => $tab));
         return $this->render('EPHECMainBundle:Default:androidlogin.html.twig', array("value"=>$value));
     }
 
@@ -132,12 +132,12 @@ class DefaultController extends Controller
 
         $mail = (isset($_POST["username"]))?$_POST["username"]:"test@yopmail.com";
         $password = $this->getPassword();
-        $id = (isset($_POST["id"]))?$_POST["id"]:16;
-        $title = (isset($_POST["id"]))?$_POST["title"]:"super test modif";
-        $desc = (isset($_POST["id"]))?$_POST["description"]:"super test modif";
-        $date = (isset($_POST["id"]))?$_POST["date"]:new \DateTime();
-        $lon = (isset($_POST["id"]))?$_POST["longitude"]:"4.614397287368774";
-        $lat = (isset($_POST["id"]))?$_POST["latitude"]:"50.717024472511845";
+        $id = (isset($_POST["idmemo"]))?$_POST["idmemo"]:16;
+        $title = (isset($_POST["title"]))?$_POST["title"]:"super test modif";
+        $desc = (isset($_POST["description"]))?$_POST["description"]:"super test modif";
+        $date = (isset($_POST["date"]))?$_POST["date"]:new \DateTime();
+        $lon = (isset($_POST["longitude"]))?$_POST["longitude"]:"4.614397287368774";
+        $lat = (isset($_POST["latitude"]))?$_POST["latitude"]:"50.717024472511845";
 
         $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->findUserByEmail($mail);
@@ -147,12 +147,11 @@ class DefaultController extends Controller
 
         if($id == -1){
             $groups = $user->getGroup();
-
             $newAlarm = new Alarm();
             $newAlarm->setTitle($title);
             $newAlarm->setMemo($desc);
-            $newAlarm->setDatealarm($date);
-            $newAlarm->setDatevalid($date);
+            $newAlarm->setDatealarm(new \DateTime($date));
+            $newAlarm->setDatevalid(new \DateTime($date));
             $newAlarm->setLongitude($lon);
             $newAlarm->setLatitude($lat);
             $newAlarm->setGroup($groups[0]);
@@ -171,7 +170,7 @@ class DefaultController extends Controller
             $alarm = $em->getRepository("EPHECNoteBundle:Alarm")->find($id);
             $alarm->setTitle($title);
             $alarm->setMemo($desc);
-            $alarm->setDatealarm($date);
+            $alarm->setDatealarm(new \DateTime($date));
             $alarm->setLongitude($lon);
             $alarm->setLatitude($lat);
             try{
