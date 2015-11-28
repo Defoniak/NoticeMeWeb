@@ -138,6 +138,7 @@ class DefaultController extends Controller
         $date = (isset($_POST["date"]))?$_POST["date"]:new \DateTime();
         $lon = (isset($_POST["longitude"]))?$_POST["longitude"]:"4.614397287368774";
         $lat = (isset($_POST["latitude"]))?$_POST["latitude"]:"50.717024472511845";
+        $address = (isset($_POST["address"]))?$_POST["address"]:"Belgium";
 
         $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->findUserByEmail($mail);
@@ -152,6 +153,7 @@ class DefaultController extends Controller
             $newAlarm->setMemo($desc);
             $newAlarm->setDatealarm(new \DateTime($date));
             $newAlarm->setDatevalid(new \DateTime($date));
+            $newAlarm->setAddress($address);
             $newAlarm->setLongitude($lon);
             $newAlarm->setLatitude($lat);
             $newAlarm->setGroup($groups[0]);
@@ -170,6 +172,7 @@ class DefaultController extends Controller
             $alarm = $em->getRepository("EPHECNoteBundle:Alarm")->find($id);
             $alarm->setTitle($title);
             $alarm->setMemo($desc);
+            $alarm->setAddress($address);
             $alarm->setDatealarm(new \DateTime($date));
             $alarm->setLongitude($lon);
             $alarm->setLatitude($lat);
