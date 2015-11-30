@@ -23,6 +23,7 @@
 
         <!-- jQuery -->
         <script src="{{ asset('bundles/EPHEC/js/jquery-1.10.2.min.js') }}"></script>
+        <script src="{{ asset('bundles/EPHEC/js/jquery.easteregg.min.js') }}"></script>
         <!--<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>-->
         <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">-->
     {% endblock %}
@@ -94,6 +95,16 @@
     {#<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>#}
     <script src="{{ asset('bundles/EPHEC/js/jquery.dropdown.js') }}"></script>
     {#<script src="https://cdn.rawgit.com/FezVrasta/dropdown.js/master/jquery.dropdown.js"></script>#}
+    <script>
+        $(function () {
+            $(document).easteregg({
+                sequence : [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]
+                , callback : function () {
+                    alert("Comme le  n'a rien fait il ne verra jamais ceci!");
+                }
+            });
+        });
+    </script>
 {% endblock %}
 </body>
 </html>
