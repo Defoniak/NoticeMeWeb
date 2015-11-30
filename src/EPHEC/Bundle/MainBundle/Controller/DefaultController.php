@@ -15,6 +15,10 @@ class DefaultController extends Controller
         return $this->render('EPHECMainBundle:Default:index.html.twig');
     }
 
+    public function snakeAction(){
+        return $this->render('EPHECMainBundle:Default:snake.html.twig');
+    }
+
     public function androidLoginAction()
     {
         $password = $this->getPassword();

@@ -7,6 +7,7 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
         <link rel="icon" type="image/x-icon" href="{{ asset('bundles/EPHEC/images/logo-HD.png') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/EPHEC/css/snake.css') }}" />
 
         <link rel="stylesheet" href="{{ asset('bundles/EPHEC/css/bootstrap.min.css') }}"/>
         <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
@@ -26,6 +27,19 @@
         <script src="{{ asset('bundles/EPHEC/js/jquery.easteregg.min.js') }}"></script>
         <!--<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>-->
         <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">-->
+
+        <style>
+        #bar .snakeblop{
+            display: none;
+            margin: 0 auto;
+        }
+        .snakeblop2{
+            display: table;
+            margin: 0 auto;
+        }
+        </style>
+
+
     {% endblock %}
     {% block scriptgmap %}{% endblock %}
 </head>
@@ -81,6 +95,7 @@
                 {% endif %}
             </ul>
         </div>
+        <div id="blop" class="snakeblop"><div id="game-area" tabindex="0"></div></div>
     </div>
 {% endblock %}
 {% block content %}
@@ -95,6 +110,7 @@
     {#<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>#}
     <script src="{{ asset('bundles/EPHEC/js/jquery.dropdown.js') }}"></script>
     {#<script src="https://cdn.rawgit.com/FezVrasta/dropdown.js/master/jquery.dropdown.js"></script>#}
+    <script type="text/javascript" src="{{ asset('bundles/EPHEC/js/snake.js') }}"></script>
     <script>
         $(function () {
             $(document).easteregg({
@@ -108,13 +124,30 @@
     <script>
     var i = 0;
     var el =  document.getElementById('bar');
+    //$('#game-arena').addClass('snakeblop');
 
     $(".dropdown").on('click',function(){
         i++;
+        console.log(el.style.height);
         if(i >= 10){
             el.style.height = "" + (parseInt(getComputedStyle(el).height.substring(0,getComputedStyle(el).height.length-2)) + 10) + "px" ;
         }
+        if(el.style.height == "450px"){
+            //document.getElementById('game-area').style.display = "table";
+            $('#blop').removeClass('snakeblop');
+            $('#blop').addClass('snakeblop2');
+
+        }
     });
+    </script>
+
+    <script type="text/javascript">
+        var mySnakeBoard = new SNAKE.Board( {
+            boardContainer: "game-area",
+            fullScreen: false,
+            width: 580,
+            height: 400
+        });
     </script>
 
 {% endblock %}
