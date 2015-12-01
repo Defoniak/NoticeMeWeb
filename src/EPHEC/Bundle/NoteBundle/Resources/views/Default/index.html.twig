@@ -26,7 +26,6 @@
                                     </span>
                                  </div>
 
-                                {# {{ form_widget(form.datealarm, {'attr': {'class': 'form-control', 'id':'datePicker'}}) }} #}
                             </div>
                         </div>
                         <div class="form-group">
@@ -47,7 +46,6 @@
                                 {{ form_label(form.address, "Address", {'label_attr': {'class': 'col-lg-2 control-label'}}) }}
                                 {{ form_errors(form.address) }}
                             <div class="col-lg-10">
-                                {#<input list="addressChoice" type="text" class="form-control" id="adressInput">#}
                                 {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
                                 <span id="validator"></span>
                             </div>
@@ -276,7 +274,6 @@
             });
         }
         function geocodePosition(pos) {
-            console.log({{ count }});
             geocoder.geocode({
                 latLng: pos
             }, function(responses) {
@@ -333,8 +330,6 @@
                 visible: false
             });
 
-            // Update current position info.
-
             // Add dragging event listeners.
             google.maps.event.addListener(personnalMarker, 'dragstart', function() {
                 updateMarkerAddress('Déplacement...');
@@ -372,7 +367,6 @@
         function resize(){
             width = (document.body.clientWidth);
             heigth = (document.body.clientHeight);
-            console.log("width = "+width);
             if(width<1391){
                 document.getElementById("map").style.width="97.5%";
                 document.getElementById("noteTable").style.width="98.5%";
@@ -396,10 +390,8 @@
                         map: map,
                         animation: google.maps.Animation.DROP,
                         icon:'http://www.google.com/mapfiles/marker'+montableau[i]+'.png',
-                        //icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
                         title: item.desc
                     });
-                    //console.log(item.desc)
                     bounds.extend(marker.getPosition());
                     counter = i+1;
                 });
@@ -449,7 +441,6 @@
         }
 
         $('#createNote').on('click', function() {
-            //$('#modal-body-body').empty().append('Lat = '+ personnalMarker.getPosition().lat()+' Long ='+personnalMarker.getPosition().lng());
             $('#form_latitude').empty().val(personnalMarker.getPosition().lat());
             $('#form_longitude').empty().val(personnalMarker.getPosition().lng());
             $('#form_address').empty().val($('#address').text());
@@ -484,9 +475,7 @@
                         url = (split2[0]+"add"),
                         method = that.attr('method'),
                         data = {};
-                console.log(method);
                 that.find('[name]').each(function(index, value){
-                    //console.log(value);
                     var that = $(this),
                             name = that.attr('name'),
                             value = that.val();
@@ -499,12 +488,10 @@
                     data: data,
                     success: function(response){
                         if (response["res"]==true){
-                            console.log('ok');
                             countElts++;
                             document.getElementById('spinner').style.display='none';
                             $('#complete-dialog').modal('hide');
                             $('#memoAdded').modal('show');
-                            console.log(response["id"]);
                             setTimeout(function() {$('#memoAdded').modal('hide');}, 2500);
                             $("#addMemoFrom")[0].reset();
                             /*geocodePositionTab(new google.maps.LatLng(data["form[latitude]"],data["form[longitude]"]),function(callback){
@@ -538,7 +525,7 @@
                                     map: map,
                                     animation: google.maps.Animation.DROP,
                                     icon:'http://www.google.com/mapfiles/marker'+montableau[counter]+'.png',
-                                    //icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+
                                     title: data["form[title]"]
                                 });
                                 counter++;
@@ -568,25 +555,17 @@
                             map.setCenter(results[0].geometry.location);
                             personnalMarker.setPosition(results[0].geometry.location);
                         }
-                        //document.getElementById("button_signaler").disabled = false;
                         var formatted_address=results[0].formatted_address;
                         var latitude=results[0].geometry.location.lat();
                         var longitude=results[0].geometry.location.lng();
                         $('#form_latitude').empty().val(latitude);
                         $('#form_longitude').empty().val(longitude);
-                        //$('#addressChoice').empty();
-                        /*$.each(results, function(i,val){
-                         document.getElementById('addressChoice').innerHTML +='<option value="'+val+'">';
-                         console.log("test");
-                         });*/
-                        // Création du marqueur du lieu (épingle)
                         $("#validator").removeClass();
                         $("#validator").addClass("glyphicon glyphicon-ok form-control-feedback");
                         $("#validatorDiv").removeClass("has-error");
                         $("#validatorDiv").addClass("has-success");
                         document.getElementById("form_save").disabled = false;
                     } else {
-                        //document.getElementById("button_signaler").disabled = true;
                         $("#validator").removeClass();
                         $("#validator").addClass("glyphicon glyphicon-remove form-control-feedback");
                         $("#validatorDiv").removeClass("has-success");
@@ -617,4 +596,3 @@
     </script>
 {% endblock %}
 
-{#Hello {{ name }}!#}

@@ -245,7 +245,6 @@
         $('#archive-button').on('click',function(e) {
             e.preventDefault();
             var split = window.location.href.split("/edit/");
-            console.log(split[0]+'/archive/'+split[1]);
             $.ajax({
                 url: split[0]+'/archive/'+split[1],
                 type: 'POST',
