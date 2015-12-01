@@ -100,10 +100,10 @@
             if ($('#chkbx'+id).is(':checked')) {
                 $('#loading').modal('show');
                 console.log('checked');
-                var split = window.location.href.split("archived/");
-                var split2 = split[0].split("page/");
+                var split = window.location.href.split("/archived/");
+                var split2 = split[0].split("/page/");
                 $.ajax({
-                    url: split2[0]+'archive/'+id,
+                    url: split2[0]+'/archive/'+id,
                     type: 'POST',
                     dataType: "json",
                     data: id,
@@ -120,10 +120,10 @@
             else {
                 console.log('notchecked');
                 $('#loading').modal('show');
-                var split = window.location.href.split("archived/");
-                var split2 = split[0].split("page/")
+                var split = window.location.href.split("/archived/");
+                var split2 = split[0].split("/page/")
                 $.ajax({
-                    url: split2[0]+'active/'+id,
+                    url: split2[0]+'/active/'+id,
                     type: 'POST',
                     dataType: "json",
                     data: id,
