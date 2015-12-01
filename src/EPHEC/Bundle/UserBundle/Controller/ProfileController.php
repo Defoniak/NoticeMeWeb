@@ -67,8 +67,8 @@ class ProfileController extends Controller
         $formFactory = $this->get('fos_user.profile.form.factory');
 
         $form = $formFactory->createForm();
+        $form->remove('username');
         $form->setData($user);
-
         $form->handleRequest($request);
 
         if ($form->isValid()) {

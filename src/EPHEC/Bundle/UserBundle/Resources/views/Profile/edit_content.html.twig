@@ -4,13 +4,13 @@
     <fieldset>
         {#<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />#}
 
-        <div class="form-group">
+        {#<div class="form-group">
             <label for="fos_user_profile_form_username" class="col-lg-2 control-label">{{ 'profile.show.username'|trans }}</label>
             <div class="col-lg-10">
                 <input type="text" id="fos_user_profile_form_username" value="{{ user.username }}" class="form-control" name="fos_user_profile_form[username]" required="required">
                 <span class="help-inline">{{ form_errors(form.username) }}</span>
             </div>
-        </div>
+        </div>#}
 
         <div class="form-group">
             <label for="fos_user_profile_form_email" class="col-lg-2 control-label">{{ 'profile.show.email'|trans }}</label>
@@ -31,6 +31,12 @@
                 <input type="text" id="fos_user_profile_firstname" class="form-control" name="fos_user_profile_form[firstname]" value="{{ user.firstname }}" required="required">
             </div>
         </div>
+        <!--<div class="form-group">
+            <label for="fos_user_profile_new_password" class="col-lg-2 control-label">New password</label>
+            <div class="col-lg-10">
+                <input type="password" id="fos_user_profile_new_password" class="form-control" name="fos_user_profile_form[plainPassword]">
+            </div>
+        </div>-->
         <div class="form-group">
             <label for="fos_user_profile_current_password" class="col-lg-2 control-label">Current password</label>
             <div class="col-lg-10">

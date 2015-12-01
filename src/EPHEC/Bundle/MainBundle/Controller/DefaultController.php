@@ -99,7 +99,8 @@ class DefaultController extends Controller
         $bool = $this->checkUser($user,$password);
         if($bool === 0) return $this->render('EPHECMainBundle:Default:androidlogin.html.twig', array("value"=>0));
 
-        $tab = array("firstname" => $user->getFirstname(), "lastname" => $user->getLastname());
+        $tab = array();
+        $tab[] = array("firstname" => $user->getFirstname(), "lastname" => $user->getLastname());
 
         $value = json_encode(array("json" => $tab));
         return $this->render('EPHECMainBundle:Default:androidlogin.html.twig', array("value"=>$value));
@@ -206,6 +207,10 @@ class DefaultController extends Controller
 
         //$em->remove($em->getRepository("EPHECNoteBundle:Alarm")->find($id));
         $alarm = $em->getRepository("EPHECNoteBundle:Alarm")->find($id);
+        /*$groups = $user->getGroup(); // protection useless
+        $bool = 0;
+        foreach($groups as $g) if($alarm->getGroup() == $g) $bool = 1;
+        if($bool === 0) return $this->render('EPHECMainBundle:Default:androidlogin.html.twig', array("value"=>0));*/
         $alarm->setDeletedAt(new \DateTime());
         try{
             $em->flush();
